@@ -10,6 +10,9 @@ pandas = "*"
 numpy = "*"
 sklearn = "*"
 seaborn = "*"
+scikit-learn = "*"
+xgboost = "*"
+plotly = "*"
 
 [dev-packages]
 
