@@ -1,1 +1,9 @@
 scikit-learn
+streamlit
+pandas
+time
+seaborn
+matplotlib
+numpy
+plotly.graph_objects
+pickle
