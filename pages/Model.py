@@ -15,7 +15,7 @@ st.set_page_config(page_title="Random Forest Model Explanation", page_icon="🌳
 data = pd.read_csv('data/model_input.csv',delimiter=';')
 
 # Load the model
-with open('xgboost_model.pkl', 'rb') as f:
+with open('data/xgboost_model.pkl', 'rb') as f:
     model = pickle.load(f)
 
 # Define a function to take user inputs
