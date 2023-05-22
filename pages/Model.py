@@ -25,26 +25,26 @@ def user_input(data):
     # define the month of the year using integers in selectbox
     month = st.sidebar.selectbox('Month', data['month'].unique())  
     # define the day of the week
-    day_week = st.sidebar.selectbox('Day', data['day_week'].sort_values().unique())
+    day_week = st.sidebar.selectbox('Day of the week', data['day_week'].sort_values().unique())
     # define the hour of the day
-    hour = st.sidebar.selectbox('Hour', data['hour'].unique())
+    hour = st.sidebar.selectbox('Hour of the day', data['hour'].unique())
     # define the day of the month
-    day_month = st.sidebar.selectbox('Day of Month', data['day_month'].unique())
+    day_month = st.sidebar.selectbox('Day of the month', data['day_month'].unique())
     # define the 10 minutes interval
-    minute = st.sidebar.selectbox('Minutes', data['minute'].unique())
+    minute = st.sidebar.selectbox('Minute of the hour', data['minute'].unique())
     # define the DWP_TEMP
     LC_DWPTEMP = 7.9
     LC_n=36.7
     # define the LC_RAD (sunshine) using a slider
-    LC_RAD = st.sidebar.slider('LC_RAD', min_value=0.0, max_value=871.0, value=0.0, step=0.1)
+    LC_RAD = st.sidebar.slider('Solar radiation (W/m2)', min_value=0.0, max_value=871.0, value=0.0, step=0.1)
     # define the temperature using a slider
-    LC_TEMP = st.sidebar.slider('Temperature', min_value=-10.0, max_value=40.0, value=0.0, step=0.1)
+    LC_TEMP = st.sidebar.slider('Temperature (°C)', min_value=-10.0, max_value=40.0, value=0.0, step=0.1)
     # define the humidity using a slider
-    LC_HUMIDITY = st.sidebar.slider('Humidity', min_value=0.0, max_value=99.0, value=0.0, step=0.1)
+    LC_HUMIDITY = st.sidebar.slider('Humidity (%)', min_value=0.0, max_value=99.0, value=0.0, step=0.1)
     # define the windspeed using a slider
-    LC_WINDSPEED = st.sidebar.slider('Windspeed', min_value=0.0, max_value=6.31, value=0.5, step=0.1)
+    LC_WINDSPEED = st.sidebar.slider('Wind Speed (m/s)', min_value=0.0, max_value=6.31, value=0.5, step=0.1)
     # define the rain using a slider
-    LC_RAININ = st.sidebar.slider('Rain', min_value=0.0, max_value=78.0, value=0.0, step=0.1)
+    LC_RAININ = st.sidebar.slider('Rain Intensity (mm/h)', min_value=0.0, max_value=78.0, value=0.0, step=0.1)
     # define LC_RAD60
     LC_RAD60 = LC_RAD
     LC_DAILYRAIN = LC_RAININ
@@ -101,7 +101,7 @@ st.markdown("""
 
 # Calculate and display feature importances
 plt.figure(figsize=(5, 3))
-features = ['month', 'day_month', 'day_week', 'hour', 'minute', 'LC_HUMIDITY', 'LC_DWPTEMP', 'LC_n', 'LC_RAD', 'LC_RAININ', 'LC_DAILYRAIN', 'LC_WINDDIR', 'LC_WINDSPEED', 'LC_RAD60', 'LC_TEMP']
+features = ['Month', 'Day of the month', 'Day of the week', 'Hour of the day', 'Minute of the hour', 'Humidity (%)', 'Dew Point Temperature (°C)', 'Number of measures', 'Solar radiation (W/m2)', 'Rain Intensity (mm/h)', 'Daily Rain Sum (mm)', 'Wind Direction', 'Wind Speed (m/s)', 'Weighted Solar Radiation (W/m2)', 'Temperature (°C)']
 importances = model.feature_importances_
 indices = np.argsort(importances)
 
