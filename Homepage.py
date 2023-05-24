@@ -32,6 +32,14 @@ st.title('MDA_Switzerland - Data Science Project 🇨🇭')
     #time.sleep(0.03)
     #my_bar.progress(percent_complete + 1, text=progress_text)
 
+# Add explanation
+st.markdown("""In context of a group project related to the Modern Data Analytics course at KU Leuven, 
+        a thorough research was conducted on a noise dataset. 
+        The data was gathered by 8 different sensors located on the main road of Leuven: the Naamsestraat.
+        Additionally, some wheather data was introduced, as well as Telraam traffic counts and general air quality of the environments.
+        Beneath you will find the geographical locations of the sensors used in the project.
+        Because the main ones will be the noise data collectors, an interactive tool was provided to check them out below.""")
+
 # showing the html map to he user
 st.components.v1.html(open("sensors_map.html", 'r').read(), height=600)
 

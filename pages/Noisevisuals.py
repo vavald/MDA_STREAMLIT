@@ -67,6 +67,9 @@ fig.update_layout(xaxis_title='Weekday',
 # Show the plot using Streamlit
 st.plotly_chart(fig)
 
+# Add explanation
+st.markdown("""An obvious remark here is that Sunday has the lowest median and quartiles, but the highest outliers. 
+                This is something to consider when working with the data.""")
 
 
 # SOME MORE CREATIVE FIGURES
