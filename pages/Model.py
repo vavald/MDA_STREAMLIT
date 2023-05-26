@@ -10,7 +10,7 @@ from sklearn.ensemble import RandomForestRegressor
 import plotly.graph_objects as go
 
 # Set up the main layout
-st.set_page_config(page_title="Random Forest Model Explanation", page_icon="🌳", layout='wide', initial_sidebar_state='auto')
+st.set_page_config(page_title="Gradient Boosting Model Explanation", page_icon="🌳", layout='wide', initial_sidebar_state='auto')
 
 data = pd.read_csv('data/model_input.csv',delimiter=';')
 
@@ -23,9 +23,17 @@ def user_input(data):
     st.sidebar.header('User Input Parameters')
 
     # define the month of the year using integers in selectbox
-    month = st.sidebar.selectbox('Month', data['month'].unique())  
-    # define the day of the week
-    day_week = st.sidebar.selectbox('Day of the week', data['day_week'].sort_values().unique())
+    month = st.sidebar.selectbox('Month', ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
+                                           'September', 'October', 'November', 'December'])
+    # map the month to an integer
+    month = data['month'].map({'January': 1, 'February': 2, 'March': 3, 'April': 4, 'May': 5, 
+                                'June': 6, 'July': 7, 'August': 8, 'September': 9, 'October': 10,
+                                'November': 11, 'December': 12})
+    # define the day of the week 
+    day_week = st.sidebar.selectbox('Day of the week', ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'])
+    # map the day of the week to an integer
+    day_week = data['day_week'].map({'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4,
+                                    'Saturday': 5, 'Sunday': 6})
     # define the hour of the day
     hour = st.sidebar.selectbox('Hour of the day', data['hour'].unique())
     # define the day of the month
@@ -45,6 +53,13 @@ def user_input(data):
     LC_WINDSPEED = st.sidebar.slider('Wind Speed (m/s)', min_value=0.0, max_value=6.31, value=0.5, step=0.1)
     # define the rain using a slider
     LC_RAININ = st.sidebar.slider('Rain Intensity (mm/h)', min_value=0.0, max_value=78.0, value=0.0, step=0.1)
+    avg_trucks = st.sidebar.slider('Average Trucks', min_value=data['avg_trucks'].min(), max_value=data['avg_trucks'].max(), value=0.0, step=0.5)
+    avg_cars = st.sidebar.slider('Average Cars', min_value=data['avg_cars'].min(), max_value=data['avg_cars'].max(), value=0.0, step=0.5)
+    avg_bikes = st.sidebar.slider('Average Bikes', min_value=data['avg_bikes'].min(), max_value=data['avg_bikes'].max(), value=0.0, step=0.5)
+    avg_pedestrians = st.sidebar.slider('Average Pedestrians', min_value=data['avg_pedestrians'].min(), max_value=data['avg_pedestrians'].max(), value=0.0, step=0.5)
+    v85 = data['v85'].mean()
+    Telraam_data = 1
+    Weather_data = 1
     # define LC_RAD60
     LC_RAD60 = LC_RAD
     LC_DAILYRAIN = LC_RAININ
@@ -65,7 +80,14 @@ def user_input(data):
             'LC_WINDDIR': LC_WINDDIR,
             'LC_WINDSPEED': LC_WINDSPEED,
             'LC_RAD60': LC_RAD60,
-            'LC_TEMP': LC_TEMP
+            'LC_TEMP': LC_TEMP,
+            'avg_trucks': avg_trucks,
+            'avg_cars': avg_cars,
+            'avg_bikes': avg_bikes,
+            'avg_pedestrians': avg_pedestrians,
+            'v85': v85,
+            'Telraam data': Telraam_data,
+            'Weather data': Weather_data
             }
 
     # Transform the data into a data frame
@@ -77,18 +99,18 @@ def user_input(data):
 input_df = user_input(data)
 
 # Display the app title and user input
-st.title('Random Forest Model Explanation App 🌳')
+st.title('Gradient Boosting Model Explanation App 🌳')
 st.write('\n')
-st.subheader('User Input Parameters:')
-st.write(input_df)
-st.subheader("Please enter the parameters on the left sidebar and click the button below")
+#st.subheader('User Input Parameters:')
+#st.write(input_df)
+st.subheader("Please enter the parameters on the left sidebar and click the button below to see the prediction for the given parameters !")
 
 
 # Predict and display the output
-if st.button("Show me the prediction !"):
-    prediction = model.predict(input_df)
+if st.button("Click here to get the prediction"):
+    prediction = model.predict_proba(input_df)
     st.subheader('Prediction:')
-    if prediction == 1:
+    if prediction[0][1] > 0.4:
         st.error('With the given parameters, the probability is high that the sound barrier of 75 dB(A) will be exceeded.')
     else:
         st.success('With the given parameters, the sound barrier of 75 dB(A) will not be exceeded.')
@@ -96,12 +118,12 @@ if st.button("Show me the prediction !"):
 # Add an explanation section (you can expand this with SHAP or LIME-based explanations)
 st.subheader('Model Explanation:')
 st.markdown("""
-    In this section, we can provide a detailed explanation of the Random Forest model. 
+    In this section, we can provide a detailed explanation of the Gradient Boosting model. 
 """)
 
 # Calculate and display feature importances
 plt.figure(figsize=(5, 3))
-features = ['Month', 'Day of the month', 'Day of the week', 'Hour of the day', 'Minute of the hour', 'Humidity (%)', 'Dew Point Temperature (°C)', 'Number of measures', 'Solar radiation (W/m2)', 'Rain Intensity (mm/h)', 'Daily Rain Sum (mm)', 'Wind Direction', 'Wind Speed (m/s)', 'Weighted Solar Radiation (W/m2)', 'Temperature (°C)']
+features = ['Month', 'Day of the month', 'Day of the week', 'Hour of the day', 'Minute of the hour', 'Humidity (%)', 'Dew Point Temperature (°C)', 'Number of measures', 'Solar radiation (W/m2)', 'Rain Intensity (mm/h)', 'Daily Rain Sum (mm)', 'Wind Direction', 'Wind Speed (m/s)', 'Weighted Solar Radiation (W/m2)', 'Temperature (°C)', 'Average Trucks','Average Cars','Average Pedestrians','Average Bikes','v85','Telraam data Present ?','Weather data Present ?']
 importances = model.feature_importances_
 indices = np.argsort(importances)
 
@@ -128,3 +150,4 @@ fig.update_layout(title_text='Feature Importances', title_x=0.5, autosize=False,
                       template='plotly_white')
 
 st.plotly_chart(fig)
+st.write('As you can see the Features that are the most important in determining wether or not a certain sound level is going to be exceeded largely depends on the Solar Radiation, the Hour of the day and Day of the week, but also the average number of cars and pedestrians passing by during that time interval.')

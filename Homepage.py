@@ -11,10 +11,11 @@ st.set_page_config(page_title="MDA_Switzerland - Data Science Project", page_ico
 model_input = pd.read_csv("data/model_input.csv",delimiter=";")
 df_weather=pd.read_csv('data/Weather_cleaned.csv')
 df_meta = pd.read_csv('data/01_Metadata_v2.csv')
+df_noise = pd.read_csv('data/final_noise_data.csv')
 # remove rows where lcpeak_avg or lceq_avg is 0
 model_input = model_input[model_input['lcpeak_avg'] != 0]
 model_input = model_input[model_input['lceq_avg'] != 0]
-model_input['date'] = pd.to_datetime('2022' + '-' + model_input['month'].astype(str) + '-' + model_input['day_month'].astype(str) + ' ' + model_input['hour'].astype(str) + ':' + model_input['minute'].astype(str))
+df_noise['date'] = pd.to_datetime('2022' + '-' + df_noise['month'].astype(str) + '-' + df_noise['day_month'].astype(str) + ' ' + df_noise['10_min_interval_start_time'].astype(str))
 
 
 ####################
@@ -49,9 +50,9 @@ option = st.selectbox('Which sensor would you like to know more about ?',('Pleas
 # create button to show bar chart
 if st.button('Show Bar Chart'):
     # create a bar chart showing lcpeak_avg where the sensor is selected using plotly.graph_objects
-    fig = go.Figure(data=[go.Bar(x=model_input[model_input['location'] == option]['date'], y=model_input[model_input['location'] == option]['lcpeak_avg'])])
-    fig.update_layout(title_text='LCPEAK_AVG for ' + option)
-    st.plotly_chart(fig, use_container_width=True)
-
-# create a bar chart showing lcpeak_avg where the sensor is selected
-
+    if option == 'Please select a sensor':
+        st.error('Please select a sensor')
+    else:
+        fig = go.Figure(data=[go.Bar(x=df_noise[df_noise['location'] == option]['date'], y=df_noise[df_noise['location'] == option]['lcpeak_avg'])])
+        fig.update_layout(title_text='LCPEAK_AVG for ' + option)
+        st.plotly_chart(fig, use_container_width=True)
