@@ -5,11 +5,14 @@ import numpy as np
 import seaborn as sns
 import plotly.express as px
 import plotly.graph_objects as go
+import calendar
+from datetime import datetime
 
 df =  pd.read_csv('data/final_noise_data.csv')
+events = pd.read_csv('data/export41.csv')
 
 st.set_page_config(page_title="Insights in the Noise dataset", page_icon="🔊", layout='wide', initial_sidebar_state='auto')
-st.title('MDA Switzerland - Insights in the Noise dataset')
+st.title('Insights in the Noise Dataset')
 
 # with st.sidebar:
 #     st.title('Noise insights')
@@ -23,7 +26,7 @@ st.markdown("""The noise data consisted of 3 distinctive sets:
 noise levels measured every second, noise events with a probability per type and ... .
 To make the analysis a bit more coherent and logical, a aggregation range of 10 minutes was decided on.
 This is the time that we expect when residents get aggitated, call the police and the latter arrive on scene.
-Let us now look at some initial data concerning the noise levels.""")
+Let us now look at some initial data concerning the noise levels, based on the important parameters from the model.""")
 
 # Bar plot of average noise levels by month
 # Group the data by month and calculate the average noise levels
@@ -56,20 +59,21 @@ st.markdown("""Between months, there is not much difference to detect.
 # st.plotly_chart(fig)
 
 
-
 # Create a box plot using Plotly
 fig = go.Figure()
 fig.add_trace(go.Box(y=df['lceq_avg'], x=df['day_week']))
 # Set labels and title
 fig.update_layout(xaxis_title='Weekday',
                   yaxis_title='Average Noise Level',
-                  title='Box Plot of Noise Levels by Day of the week')
+                  title='Box Plot of Noise Levels by Day of the Week')
 # Show the plot using Streamlit
 st.plotly_chart(fig)
 
 # Add explanation
 st.markdown("""An obvious remark here is that Sunday has the lowest median and quartiles, but the highest outliers. 
-                This is something to consider when working with the data.""")
+                This is something to consider when using the predictive option on the model page.""")
+
+
 
 
 # SOME MORE CREATIVE FIGURES
@@ -93,35 +97,121 @@ st.header('More creative insights')
 # st.plotly_chart(fig)
 
 
-# Noise level with interactive period and location
+# NOISE EVENTS
 
-# Filter the data based on selected location, day of the week, and time range
-selected_location = st.selectbox("Select Location", df['location'].unique())
-selected_day = st.selectbox("Select Day of the Week", df['day_week'].unique())
-start_time = st.selectbox("Select Start Time",
-                          options=df[df['day_week'] == selected_day]['10_min_interval_start_time'].unique())
-end_time = st.selectbox("Select End Time",
-                        options=df[df['day_week'] == selected_day]['10_min_interval_start_time'].unique())
+# Convert 'result_timestamp' column to datetime
+events['result_timestamp'] = pd.to_datetime(events['result_timestamp'])
 
-filtered_df = df[(df['location'] == selected_location) &
-                 (df['day_week'] == selected_day) &
-                 (df['10_min_interval_start_time'].between(start_time, end_time))]
-
-# Calculate the week number based on the selected time range
-filtered_df['week_number'] = filtered_df['10_min_interval_start_time'].dt.isocalendar().week
-
-# Group the data by week and calculate the average noise levels for each week
-grouped_df = filtered_df.groupby('week_number')['lceq_avg'].mean().reset_index()
-
-# Create a separate line for each week
-fig = go.Figure()
-for week_number, week_data in grouped_df.groupby('week_number'):
-    fig.add_trace(go.Scatter(x=week_data['10_min_interval_start_time'], y=week_data['lceq_avg'],
-                             name=f"Week {week_number}", mode='lines'))
-
-# Set labels and title
-fig.update_layout(xaxis_title='10 Min Interval Start Time', yaxis_title='Average Noise Level',
-                  title=f'Noise Levels on {selected_day} at Location: {selected_location} ({start_time} - {end_time})')
-
-# Show the plot using Streamlit
+# PER MONTH
+# Create a dictionary to map month numbers to month names
+month_names = {i: calendar.month_name[i] for i in range(1, 13)}
+# Create a slider to select the month
+selected_month_number = st.slider("Select Month", 1, 12)
+selected_month_name = month_names[selected_month_number]
+# Display the selected month name
+st.write(f"The month you have selected is: {selected_month_name}.")
+# Filter the data based on the selected month
+filtered_events = events[events['result_timestamp'].dt.month == selected_month_number]
+# Calculate the distribution of detected noise events classes
+class_counts = filtered_events['noise_event_laeq_primary_detected_class'].value_counts()
+# Calculate the weighted class counts by multiplying with certainty
+weighted_class_counts = class_counts * filtered_events.groupby('noise_event_laeq_primary_detected_class')[
+    'noise_event_laeq_primary_detected_certainty'].mean()
+# Create a pie chart using Plotly
+fig = px.pie(weighted_class_counts, values=weighted_class_counts.values, names=weighted_class_counts.index)
+# Set the chart title
+fig.update_layout(title=f"Detected Noise Events Classes Distribution - Month {selected_month_name}")
+# Show the pie chart using Streamlit
 st.plotly_chart(fig)
+
+# PER WEEKDAY
+# Create a list of weekday names
+weekday_names = list(calendar.day_name)
+# Create a selectbox to select the weekday
+selected_weekday_name = st.selectbox("Select Weekday", weekday_names)
+# Filter the data based on the selected weekday
+filtered_events = events[events['result_timestamp'].dt.strftime("%A") == selected_weekday_name]
+# Calculate the distribution of detected noise events classes
+class_counts = filtered_events['noise_event_laeq_primary_detected_class'].value_counts()
+weighted_class_counts = class_counts * filtered_events.groupby('noise_event_laeq_primary_detected_class')[
+    'noise_event_laeq_primary_detected_certainty'].mean()
+# Create a pie chart using Plotly
+fig = px.pie(weighted_class_counts, values=weighted_class_counts.values, names=weighted_class_counts.index)
+# Set the chart title
+fig.update_layout(title=f"Detected Noise Events Classes Distribution - {selected_weekday_name}")
+# Show the pie chart using Streamlit
+st.plotly_chart(fig)
+
+
+# # Convert result_timestamp column to datetime
+# events['result_timestamp'] = pd.to_datetime(events['result_timestamp'])
+# # Extract month and day of the week from the result_timestamp
+# events['month'] = events['result_timestamp'].dt.month
+# events['day_of_week'] = events['result_timestamp'].dt.dayofweek
+# # Group the data by month and calculate the count of noise events
+# events_per_month = events.groupby('month').size().reset_index(name='count')
+# # Create a pie chart for noise events per month
+# fig1 = px.pie(events_per_month, names='month', values='count', title='Noise Events per Month')
+# # Group the data by day of the week and calculate the count of noise events
+# events_per_day_of_week = events.groupby('day_of_week').size().reset_index(name='count')
+# # Create a pie chart for noise events per day of the week
+# fig2 = px.pie(events_per_day_of_week, names='day_of_week', values='count', title='Noise Events per Day of the Week')
+# # Group the data by detected class and calculate the count of noise events
+# events_per_detected_class = events.groupby('noise_event_laeq_primary_detected_class').size().reset_index(name='count')
+# # Create a pie chart for the distribution of detected class
+# fig3 = px.pie(events_per_detected_class, names='noise_event_laeq_primary_detected_class', values='count',
+#               title='Distribution of Detected Class')
+# # Group the data by detected unit and calculate the count of noise events
+# events_per_detected_unit = events.groupby('noise_event_laeq_primary_detected_class_unit').size().reset_index(name='count')
+# # Create a pie chart for the distribution of detected unit
+# fig4 = px.pie(events_per_detected_unit, names='noise_event_laeq_primary_detected_class_unit', values='count',
+#               title='Distribution of Detected Unit')
+# # Display the pie charts using Streamlit
+# st.plotly_chart(fig1)
+# st.plotly_chart(fig2)
+# st.plotly_chart(fig3)
+# st.plotly_chart(fig4)
+
+
+
+
+
+
+# # Noise level with interactive period and location
+
+# # Filter the data based on selected location, day of the week, and time range
+# selected_location = st.selectbox("Select Location", df['location'].unique())
+# selected_day = st.selectbox("Select Day of the Week", df['day_week'].unique())
+# start_time = st.selectbox("Select Start Time",
+#                           options=df[df['day_week'] == selected_day]['10_min_interval_start_time'].unique())
+# end_time = st.selectbox("Select End Time",
+#                         options=df[df['day_week'] == selected_day]['10_min_interval_start_time'].unique())
+
+# # Combine relevant columns to create a datetime column
+# df['datetime'] = pd.to_datetime(df['year'].astype(str) + '-' +
+#                                df['month'].astype(str) + '-' +
+#                                df['day_month'].astype(str) + ' ' +
+#                                df['10_min_interval_start_time'])
+
+# filtered_df = df[(df['location'] == selected_location) &
+#                  (df['day_week'] == selected_day) &
+#                  (df['10_min_interval_start_time'].between(start_time, end_time))]
+
+# # Calculate the week number based on the selected time range
+# filtered_df['week_number'] = filtered_df['datetime'].dt.isocalendar().week
+
+# # Group the data by week and calculate the average noise levels for each week
+# grouped_df = filtered_df.groupby('week_number')['lceq_avg'].mean().reset_index()
+
+# # Create a separate line for each week
+# fig = go.Figure()
+# for week_number, week_data in grouped_df.groupby('week_number'):
+#     fig.add_trace(go.Scatter(x=week_data['10_min_interval_start_time'], y=week_data['lceq_avg'],
+#                              name=f"Week {week_number}", mode='lines'))
+
+# # Set labels and title
+# fig.update_layout(xaxis_title='10 Min Interval Start Time', yaxis_title='Average Noise Level',
+#                   title=f'Noise Levels on {selected_day} at Location: {selected_location} ({start_time} - {end_time})')
+
+# # Show the plot using Streamlit
+# st.plotly_chart(fig)
