@@ -20,12 +20,24 @@ st.markdown("""The project focuses on the analytics of the noise problem on the 
         To find peace between both groups, some behavioural ‘nudges’ to reduce noise will be implemented.
         However, to do so it is important to analyse which elements have the most effect on noise.
         The goal of this whole project is to carefully analyse and predict noise, 
-        especially the peaks where some conflict between parties can arise.""")
+        especially the peaks where some conflict between parties can arise.
+        To do this, the given datasets are aggregated to 10 minute intervals, 
+        as this is the time we estimate between the noise and the police intervening.""")
 
 st.header('Datasets')
 
-st.markdown("""
+st.markdown("""The two datasets given are the noise dataset on the Naamsestraat and the weather dataset around Leuven.
+        There are some factors that are important when dealing with noise, 
+        as is also visible when looking at the seperate noise events with given distributions as to what might have caused it.
+        Traffic is one of them, where we tried to include traffic counts via Telraam data. 
         """)
 
 st.header('Overview of the process')
 
+st.markdown("""The process started with preprocessing every dataset. This is needed to eliminate some missing values,
+        get a clearer view on what the variables are that you will be working with and so on.
+        The process afterwards is indicated in both our notebooks (with full code for eg. preprocessing measures)
+        and our streamlit applications, in which you are reading right now. 
+        The step-by-step guide would be to look at the notebooks 
+        and afterwards follow the pages from the streamlit app 
+        going from the homepage to more details including the model to more specific insights eg. in noise.""")
