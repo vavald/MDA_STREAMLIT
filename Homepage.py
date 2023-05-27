@@ -6,7 +6,7 @@ import seaborn as sns
 import time
 import plotly.graph_objects as go
 
-st.set_page_config(page_title="MDA_Switzerland - Data Science Project", page_icon="🇨🇭", layout='wide', initial_sidebar_state='auto')
+st.set_page_config(page_title="MDA Switzerland - Data Science Project", page_icon="🇨🇭", layout='wide', initial_sidebar_state='auto')
 # Load Data
 model_input = pd.read_csv("data/model_input.csv",delimiter=";")
 df_weather=pd.read_csv('data/Weather_cleaned.csv')
@@ -35,11 +35,15 @@ st.title('MDA_Switzerland - Data Science Project 🇨🇭')
 
 # Add explanation
 st.markdown("""In context of a group project related to the Modern Data Analytics course at KU Leuven, 
-        a thorough research was conducted on a noise dataset. 
+        a thorough research was conducted on a noise dataset.
         The data was gathered by 8 different sensors located on the main road of Leuven: the Naamsestraat.
         Additionally, some wheather data was introduced, as well as Telraam traffic counts and general air quality of the environments.
         Beneath you will find the geographical locations of the sensors used in the project.
-        Because the main ones will be the noise data collectors, an interactive tool was provided to check them out below.""")
+        Because the main ones will be the noise data collectors, 
+        an interactive tool was provided to check them out below.""")
+
+st.markdown("""More information concerning the background of the project and the overview of steps
+    can be found on the details page. Please refer to this page if you have additional questions.""")
 
 # showing the html map to he user
 st.components.v1.html(open("sensors_map.html", 'r').read(), height=600)

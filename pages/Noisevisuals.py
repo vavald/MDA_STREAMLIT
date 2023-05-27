@@ -80,23 +80,6 @@ st.markdown("""An obvious remark here is that Sunday has the lowest median and q
 
 st.header('More creative insights')
 
-# REMARK: EDIT THE VALUES ETC BASED ON WHAT SIMULATION YOU WANT TO SHOW
-
-# # Create Streamlit app
-# st.markdown("**Sound Level Simulation**")
-# # Filter the data
-# time_range = st.sidebar.slider("Select Time Range", min_value=0, max_value=24, value=(8, 18))
-# filtered_df = df[(df["time"] >= time_range[0]) & (df["time"] <= time_range[1])]
-# # Create interactive map using Plotly
-# fig = px.scatter_mapbox(filtered_df, lat="latitude", lon="longitude", size="sound_level",
-#                         hover_data=["location"], color="sound_level", color_continuous_scale="Viridis",
-#                         size_max=15, zoom=13, mapbox_style="carto-positron")
-
-# fig.update_layout(mapbox_center={"lat": filtered_df["latitude"].mean(), "lon": filtered_df["longitude"].mean()})
-# # Run the Streamlit app
-# st.plotly_chart(fig)
-
-
 # NOISE EVENTS
 
 # Convert 'result_timestamp' column to datetime
@@ -141,6 +124,22 @@ fig = px.pie(weighted_class_counts, values=weighted_class_counts.values, names=w
 fig.update_layout(title=f"Detected Noise Events Classes Distribution - {selected_weekday_name}")
 # Show the pie chart using Streamlit
 st.plotly_chart(fig)
+
+# REMARK: EDIT THE VALUES ETC BASED ON WHAT SIMULATION YOU WANT TO SHOW
+
+# # Create Streamlit app
+# st.markdown("**Sound Level Simulation**")
+# # Filter the data
+# time_range = st.sidebar.slider("Select Time Range", min_value=0, max_value=24, value=(8, 18))
+# filtered_df = df[(df["time"] >= time_range[0]) & (df["time"] <= time_range[1])]
+# # Create interactive map using Plotly
+# fig = px.scatter_mapbox(filtered_df, lat="latitude", lon="longitude", size="sound_level",
+#                         hover_data=["location"], color="sound_level", color_continuous_scale="Viridis",
+#                         size_max=15, zoom=13, mapbox_style="carto-positron")
+
+# fig.update_layout(mapbox_center={"lat": filtered_df["latitude"].mean(), "lon": filtered_df["longitude"].mean()})
+# # Run the Streamlit app
+# st.plotly_chart(fig)
 
 
 # # Convert result_timestamp column to datetime
