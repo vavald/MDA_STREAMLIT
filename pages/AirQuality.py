@@ -3,6 +3,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import plotly.graph_objects as go
+import plotly.express as px
 
 df = pd.read_csv("data/model_input.csv", delimiter=";")
 df.drop(['location'],axis=1,inplace=True)
@@ -61,3 +63,21 @@ ax.set_xlabel('Month')
 ax.set_ylabel('2.5_um_count')
 st.pyplot(fig)
 
+# Scatter plot of 2.5_um_count by day 
+st.header("2.5_um_count by day")
+st.markdown("We will now look at the 2.5_um_count by day. We can see that there is a negative correlation between the 2.5_um_count and the day. This means that when the day is higher, the air quality is better.")
+fig = px.scatter(new_df, x="day_month", y="2.5_um_count", trendline="ols",
+                    animation_frame="month", animation_group="day_month", color="day_month",
+                    hover_name="day_month", range_x=[0, 31], range_y=[0, 50])
+fig.update_layout(title='2.5_um_count by day', xaxis_title='Day', yaxis_title='2.5_um_count')
+st.plotly_chart(fig)
+
+
+# Scatter plot of 2.5_um_count by LC_TEMP
+st.header("2.5_um_count by LC_TEMP")
+st.markdown("We will now look at the 2.5_um_count by LC_TEMP. We can see that there is a negative correlation between the 2.5_um_count and the LC_TEMP. This means that when the temperature is higher, the air quality is better.")
+fig = px.scatter(new_df, x="LC_TEMP", y="2.5_um_count", trendline="ols", 
+                 animation_frame="month", animation_group="day_month", color="day_month",
+                 hover_name="day_month", range_x=[-10, 30], range_y=[0, 60])
+fig.update_layout(title='2.5_um_count by LC_TEMP', xaxis_title='LC_TEMP', yaxis_title='2.5_um_count')
+st.plotly_chart(fig)
