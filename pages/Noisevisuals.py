@@ -77,9 +77,6 @@ st.markdown("""An obvious remark here is that Sunday has the lowest median and q
 
 
 
-
-
-
 # SOME MORE CREATIVE FIGURES
 
 st.header('More creative insights')
