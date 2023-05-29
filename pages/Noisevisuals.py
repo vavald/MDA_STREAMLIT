@@ -32,14 +32,14 @@ Let us now look at some initial data concerning the noise levels, based on the i
 
 # Bar plot of average noise levels by month
 # Group the data by month and calculate the average noise levels
-avg_noise_by_month = df.groupby('month')['lceq_avg'].mean()
+avg_noise_by_month = df.groupby('month')['lcpeak_avg'].mean()
 # Create the bar chart using Plotly
 fig = go.Figure(data=go.Bar(x=avg_noise_by_month.index, y=avg_noise_by_month.values))
 # Set the y-axis range
-fig.update_yaxes(range=[56, 62])
+fig.update_yaxes(range=[68, 75])
 # Set labels and title
-fig.update_layout(xaxis_title='Month', yaxis_title='Average Noise Level',
-                  title='Bar plot of Average Noise Levels by Month')
+fig.update_layout(xaxis_title='Month', yaxis_title='Average Noise Level Peaks',
+                  title='Bar plot of Average Noise Level Peaks by Month')
 # Show the plot using Streamlit
 st.plotly_chart(fig)
 
@@ -51,7 +51,7 @@ st.markdown("""Between months, there is not much difference to detect.
 # # Scatter plot of noise levels by time interval
 # # Create a scatter plot using Plotly
 # fig = go.Figure(data=go.Scatter(x=df['10_min_interval_start_time'],
-#                                y=df['lceq_avg'],
+#                                y=df['lcpeak_avg'],
 #                                mode='markers'))
 # # Set labels and title
 # fig.update_layout(xaxis_title='10 Min Interval Start Time',
@@ -60,16 +60,28 @@ st.markdown("""Between months, there is not much difference to detect.
 # # Show the plot using Streamlit
 # st.plotly_chart(fig)
 
+# Define the order of weekdays
+weekday_order = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+# Calculate the mean of lcpeak_avg for each day of the week
+mean_lcpeak_avg = df.groupby('day_week')['lcpeak_avg'].mean().reindex(weekday_order).reset_index()
 
 # Create a box plot using Plotly
 fig = go.Figure()
-fig.add_trace(go.Box(y=df['lceq_avg'], x=df['day_week']))
+fig.add_trace(go.Box(y=df['lcpeak_avg'], x=df['day_week'], name='Distribution per Week Day'))
+
+# Add a red trend line for the mean values
+fig.add_trace(go.Scatter(x=mean_lcpeak_avg['day_week'], y=mean_lcpeak_avg['lcpeak_avg'],
+                         mode='lines', name='Mean per Week Day', line=dict(color='red')))
+
 # Set labels and title
 fig.update_layout(xaxis_title='Weekday',
-                  yaxis_title='Average Noise Level',
-                  title='Box Plot of Noise Levels by Day of the Week')
+                  yaxis_title='Average Noise Level Peaks',
+                  title='Box Plot of Noise Level Peaks by Day of the Week')
+fig.update_layout(width=850, height=450)
+
 # Show the plot using Streamlit
 st.plotly_chart(fig)
+
 
 # Add explanation
 st.markdown("""An obvious remark here is that Sunday has the lowest median and quartiles, but the highest outliers. 
@@ -84,7 +96,10 @@ st.header('More creative insights')
 st.markdown("""The first thing that we will look into are the seperate noise events that were detected.
         To do this, please select the month that you want to look into or the day of the week.
         Afterwards, the distribution of cases will be shown, 
-        while taking into account the uncertainties during the registration.""")
+        while taking into account the uncertainties during the registration.
+        What we recommend is clicking on all the transport types in the legend to get them off the graph,
+        as these are things that will be difficult to mitigate (sirens) 
+        and often happen during the day (passenger car).""")
 
 # NOISE EVENTS
 
@@ -221,13 +236,13 @@ filtered_df = df[(df['location'] == selected_location) &
 filtered_df['week_number'] = filtered_df['datetime'].dt.isocalendar().week
 
 # Group the data by week and calculate the average noise levels for each week
-grouped_df = filtered_df.groupby(['week_number', '10_min_interval_start_time'])['lceq_avg'].mean().reset_index()
+grouped_df = filtered_df.groupby(['week_number', '10_min_interval_start_time'])['lcpeak_avg'].mean().reset_index()
 
 # Create a separate line for each week
 fig = go.Figure()
 
 for week_number, week_data in grouped_df.groupby('week_number'):
-    fig.add_trace(go.Scatter(x=week_data['10_min_interval_start_time'], y=week_data['lceq_avg'],
+    fig.add_trace(go.Scatter(x=week_data['10_min_interval_start_time'], y=week_data['lcpeak_avg'],
                              name=f"Week {week_number}", mode='lines'))
 
 # Set labels and title
