@@ -107,13 +107,12 @@ st.markdown("""The first thing that we will look into are the seperate noise eve
 events['result_timestamp'] = pd.to_datetime(events['result_timestamp'])
 
 # PER MONTH
-# Create a dictionary to map month numbers to month names
-month_names = {i: calendar.month_name[i] for i in range(1, 13)}
-# Create a slider to select the month
-selected_month_number = st.slider("Select Month", 1, 12)
-selected_month_name = month_names[selected_month_number]
-# Display the selected month name
-st.write(f"The month you have selected is: {selected_month_name}.")
+# Create a dictionary to map month names to month numbers
+month_names = list(calendar.month_name)[1:]
+# Create a selectbox to select the month
+selected_month_name = st.selectbox("Select Month", month_names, index=0)
+# Get the corresponding month number
+selected_month_number = month_names.index(selected_month_name) + 1
 # Filter the data based on the selected month
 filtered_events = events[events['result_timestamp'].dt.month == selected_month_number]
 # Calculate the distribution of detected noise events classes
@@ -127,6 +126,7 @@ fig_month = px.pie(weighted_class_counts, values=weighted_class_counts.values, n
 fig_month.update_layout(title=f"Detected Noise Events Classes Distribution - Month {selected_month_name}")
 # Resize the figure
 fig_month.update_layout(width=520, height=400)
+
 
 # PER WEEKDAY
 # Create a list of weekday names
