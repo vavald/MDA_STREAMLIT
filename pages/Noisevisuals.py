@@ -71,7 +71,7 @@ fig.add_trace(go.Box(y=df['lcpeak_avg'], x=df['day_week'], name='Distribution pe
 
 # Add a red trend line for the mean values
 fig.add_trace(go.Scatter(x=mean_lcpeak_avg['day_week'], y=mean_lcpeak_avg['lcpeak_avg'],
-                         mode='lines', name='Mean per Week Day', line=dict(color='red')))
+                         mode='lines', name='Mean per Week Day', line_shape='spline',line=dict(color='red')))
 
 # Set labels and title
 fig.update_layout(xaxis_title='Weekday',

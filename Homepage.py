@@ -89,8 +89,8 @@ if st.button('Show Bar Chart'):
         fig = make_subplots(specs=[[{"secondary_y": True}]])
 
         fig.add_trace(
-            go.Scatter(x=df_noise_location['date'], y=df_noise_location['lcpeak_avg_smooth'], mode='lines', name='lcpeak_avg_smooth'),
-            secondary_y=False,
+            go.Scatter(x=df_noise_location['date'], y=df_noise_location['lcpeak_avg_smooth'], mode='lines', name='lcpeak_avg_smooth', line_shape='spline'),
+            secondary_y=False
         )
 
         # Get the dates where data is missing
@@ -111,3 +111,9 @@ if st.button('Show Bar Chart'):
         fig.update_yaxes(title_text="Sound Level (dB)", automargin=True)
 
         st.plotly_chart(fig, use_container_width=True)
+
+# create button to compare two sensors next to the other button
+if st.button('Compare with another sensor'):
+    # create dropdown menu to select a second sensor
+    option2 = st.selectbox('Which sensor would you like to compare with ?',('Please select a sensor','Naamsestraat 35','Naamsestraat 57','Naamsestraat 62','His & Hears','Calvariekapel','Parkstraat 2','Naamsestraat 81','Vrijthof'))
+
