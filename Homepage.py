@@ -102,7 +102,7 @@ if st.button('Show Bar Chart'):
                 type="line",
                 xref="x", yref="paper",
                 x0=date, y0=0, x1=date, y1=1,
-                line=dict(color="tomato", width=3),
+                line=dict(color="tomato", width=4),
                 secondary_y=True,
             )
 

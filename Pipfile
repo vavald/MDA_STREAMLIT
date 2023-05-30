@@ -13,6 +13,7 @@ seaborn = "*"
 scikit-learn = "*"
 xgboost = "*"
 plotly = "*"
+statsmodels = "*"
 
 [dev-packages]
 
