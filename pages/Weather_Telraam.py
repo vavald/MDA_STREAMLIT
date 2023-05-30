@@ -15,6 +15,9 @@ import time
 
 # In[ ]:
 
+st.set_page_config(page_title="Weather - Telraam", page_icon="🌞", layout='wide', initial_sidebar_state='auto')
+st.title('Insights in the Model Dataset')
+
 
 noise = pd.read_csv('data/final_noise_data.csv')
 
@@ -72,25 +75,20 @@ import plotly.express as px
 
 # In[ ]:
 
-st.title('Insights in the Model Dataset')
-
-# In[ ]:
-
-st.header('Model - Weather dataset')
+st.header('Model - Weather dataset 🌞')
 
 st.markdown(
     """
-   Scatter plot 'Sun radiation and noise level per day in one year'.
-   The colors represent the noise levels with its correspondent value. 
-   Higher level of noise tends to have a yellow color.
+   Below you can see a plot with the sun radiation and noise level per day in one year. 
+   The colours represent the noise levels with its corresponding value. 
+   Higher level of noise tends to have a yellow colour.  
+   As the months go by, the solar radiation increases and the noise levels increase too, especially in May and June.
+   Despite the sun radiation in July being higher, the noise levels appear to be lower 
+   (eg. people on vacation/no students in Leuven).
    
-   As the months go by, the solar radiation increases and the noise levels increase too (specially in May and June).
-   Despite sun radiation in July is higher, noise level is lower. (People are on vacation) 
-   
-   In the second semester, although the sun radiation decreases, the noise levels do not follow the same behavior.
-   
-   December has lower sun radiation than january, however the noise levels are higher( because of Christmas Eve and other 
-   holidays)  """
+   In the second semester, although the sun radiation decreases, the noise levels do not follow the same pattern.   
+   December has a lower sun radiation than January, 
+   however the noise levels are higher (eg. because of Christmas Eve and other holidays).  """
 )
 
 
@@ -106,15 +104,16 @@ st.plotly_chart(fig)
 
 st.markdown(
     """
-   The scatter plot shows us the relationship between Temperature and Noise level per day in one year, 
-   The colors respresent the noise levels whit its correspondent value. 
+   The scatter plot shows us the relationship between Temperature and Noise level per day in one year,
+   where the colours respresent the noise levels with their corresponding value. 
    Higher level of noise tends to have a yellow color.
-   In January and February, the noise level was not high and the noise level too. 
-   In March there is a difference respect to the first two months of the year, the temperature increases and the noise level
-   too. This tendecy prevails until June. 
-   Despite Juli has higher temperatures, the noise level decreases (People is on vacantions)
+   In January and February, both the temperature and the noise levels are high. 
+   In March there is a difference in comparison to the first two months of the year:
+   the temperature increases as well as the noise levels. 
+   This tendecy prevails until June. 
+   Despite July having higher temperatures, the noise levels decrease (eg. people are on vacations)/
    Although the temperature decreases after July, we cannot assume that the noise level decreases directly.
-   We see the tendency that the noise level does not change significantly. 
+   We can distinguish the tendency that the noise level does not change significantly. 
    Noise levels do not excede 80dB (only in a counted number of days). 
 """
 )
@@ -132,13 +131,13 @@ st.plotly_chart(fig)
 
 st.markdown(
     """
-     Scatter plot Sun radiation vs Noise level per day every 10 minutes' shows us the behavior of the noise level every day
-     of the week at the same time in intervals of 10 minutes.
-    The colors represent the noise levels with its correspondent value. 
+    Beneath you can see a plot describing the sun radiation versus the noise level per day, every 10 minutes. 
+    This shows us the behaviour of the noise level every day of the week at the same time in intervals of 10 minutes.
+    The colours represent the noise levels with their corresponding value. 
     Higher level of noise tends to have a yellow color.
     
-    Unquestionably, from Monday to Friday as the sun radiation increases door the time, the noise level increases too.
-    However en the weekend (Friday, Saturday and Sunday) we can find hihger levels of sun radiation but the noise levels are
+    Unquestionably, from Monday to Friday as the sun radiation increases with time and the noise levels too.
+    However en the weekend (Friday, Saturday and Sunday) we can find higher levels of sun radiation but the noise levels are
     lower than the rest days of the week.
     
     From midnight to 6:10 am, sun radiation is low and the noise too.
@@ -192,7 +191,7 @@ st.plotly_chart(fig)
 
 # In[ ]:
 
-st.header('Model - Telraam dataset')
+st.header('Model - Telraam dataset 🚗')
 
 st.markdown(
     """

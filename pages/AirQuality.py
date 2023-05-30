@@ -25,7 +25,8 @@ merged_df.to_csv("merged_df.csv", index=False)
 
 new_df = merged_df.drop(['lcpeak_avg', 'lceq_avg', 'v85', 'Telraam data', 'avg_pedestrians', 'avg_bikes', 'avg_cars', 'avg_trucks' ], axis=1)
 
-st.title("Air Quality analysis")
+st.set_page_config(page_title="Air Quality", page_icon="༄", layout='wide', initial_sidebar_state='auto')
+st.title("Air Quality analysis ༄")
 st.markdown("In this section, we will analyse the air quality data found in the PurpleAir API. We will start by looking at the data and then we will try to find some correlations between the different variables.")
 
 

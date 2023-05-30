@@ -11,13 +11,11 @@ from datetime import datetime
 df =  pd.read_csv('data/final_noise_data.csv')
 events = pd.read_csv('data/export41.csv')
 
-st.set_page_config(page_title="Insights in the Noise dataset", page_icon="🔊", layout='wide', initial_sidebar_state='auto')
-st.title('Insights in the Noise Dataset')
+st.set_page_config(page_title="Noise", page_icon="🔊", layout='wide', initial_sidebar_state='auto')
+st.title('Insights in the Noise Dataset 🔊')
 
 # with st.sidebar:
 #     st.title('Noise insights')
-
-
 
 # GETTING FAMILIAR WITH THE DATA
 
@@ -215,6 +213,7 @@ st.markdown("""To get some more insight in how the data evolves at the exact sam
 
 # Filter the data based on selected location, day of the week, and time range
 selected_location = st.selectbox("Select Location", df['location'].unique())
+selected_month = st.selectbox('Select Month of the Year', df['month'].unique())
 selected_day = st.selectbox("Select Day of the Week", df['day_week'].unique())
 start_time = st.selectbox("Select Start Time",
                           options=df[df['day_week'] == selected_day]['10_min_interval_start_time'].unique())
@@ -229,6 +228,7 @@ df['datetime'] = pd.to_datetime(df['year'].astype(str) + '-' +
 
 # Get the filtered data from the input parameters
 filtered_df = df[(df['location'] == selected_location) &
+                 (df['month'] == selected_month) &
                  (df['day_week'] == selected_day) &
                  (df['10_min_interval_start_time'].between(start_time, end_time))]
 
