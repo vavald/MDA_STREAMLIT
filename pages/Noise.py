@@ -7,6 +7,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import calendar
 from datetime import datetime
+st.set_page_config(page_title="Noise", page_icon="🔊", layout='wide', initial_sidebar_state='auto')
 
 @st.cache_data
 def load_data():
@@ -16,7 +17,6 @@ def load_data():
 
 df, events = load_data()
 
-st.set_page_config(page_title="Noise", page_icon="🔊", layout='wide', initial_sidebar_state='auto')
 st.title('Insights in the Noise Dataset 🔊')
 
 # with st.sidebar:

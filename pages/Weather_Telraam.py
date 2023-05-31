@@ -6,6 +6,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import time
+st.set_page_config(page_title="Weather - Telraam", page_icon="🌞", layout='wide', initial_sidebar_state='auto')
 
 @st.cache_data
 def load_data():
@@ -15,7 +16,6 @@ def load_data():
     return noise, model
 noise, model = load_data()
 
-st.set_page_config(page_title="Weather - Telraam", page_icon="🌞", layout='wide', initial_sidebar_state='auto')
 st.title('Insights in the Model Dataset')
 
 import calendar
