@@ -8,7 +8,7 @@ import plotly.express as px
 from sklearn.model_selection import train_test_split
 from xgboost import XGBRegressor
 
-@st.cache
+@st.cache_data
 def load_data():
     df = pd.read_csv("data/model_input.csv", delimiter=";")
     df.drop(['location'],axis=1,inplace=True)

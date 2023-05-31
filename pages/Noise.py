@@ -8,7 +8,7 @@ import plotly.graph_objects as go
 import calendar
 from datetime import datetime
 
-@st.cache
+@st.cache_data
 def load_data():
     df = pd.read_csv('data/final_noise_data.csv')
     events = pd.read_csv('data/export41.csv')

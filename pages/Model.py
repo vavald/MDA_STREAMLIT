@@ -12,7 +12,7 @@ import plotly.graph_objects as go
 # Set up the main layout
 st.set_page_config(page_title="Gradient Boosting Model Explanation", page_icon="🌳", layout='wide', initial_sidebar_state='auto')
 
-@st.cache
+@st.cache_data
 def load_data():
     data = pd.read_csv('data/model_input.csv',delimiter=';')
     # Load the mode
