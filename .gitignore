@@ -1,3 +1,7 @@
-data
+data/Weather_cleaned.csv
+data/final_weather_data.csv
+data/final_noise_data.csv
+data/model_input.csv
+data/export41.csv
 xgboost_model.pkl
 .DS_Store

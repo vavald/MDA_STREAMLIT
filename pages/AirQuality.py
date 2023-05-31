@@ -21,7 +21,6 @@ airquality['hour'] = airquality['time_stamp'].dt.hour
 airquality['minute'] = airquality['time_stamp'].dt.minute
 
 merged_df = pd.merge(df, airquality, how='left', on=['month', 'day_month', 'day_week', 'hour', 'minute'])
-merged_df.to_csv("merged_df.csv", index=False)
 
 new_df = merged_df.drop(['lcpeak_avg', 'lceq_avg', 'v85', 'Telraam data', 'avg_pedestrians', 'avg_bikes', 'avg_cars', 'avg_trucks' ], axis=1)
 
