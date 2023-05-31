@@ -7,7 +7,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 from sklearn.model_selection import train_test_split
 from xgboost import XGBRegressor
-
+import pickle
 st.set_page_config(page_title="Air Quality", page_icon="༄", layout='wide', initial_sidebar_state='auto')
 
 
@@ -17,8 +17,10 @@ def load_data():
     df.drop(['location'],axis=1,inplace=True)
     df = df[df['lceq_avg'] != 0]
     airquality = pd.read_csv("data/Air_Quality.csv", delimiter=",")
-    return df, airquality
-df, airquality = load_data()
+    with open('data/xgb_airquality.pkl', 'rb') as f:
+        model = pickle.load(f)
+    return df, airquality, model
+df, airquality, model = load_data()
 
 airquality['time_stamp'] = pd.to_datetime(airquality['time_stamp'])
 airquality['month'] = airquality['time_stamp'].dt.month
@@ -101,14 +103,12 @@ fig = px.scatter(new_df, x="LC_TEMP", y="2.5_um_count", trendline="ols",
 fig.update_layout(title='2.5_um_count by LC_TEMP', xaxis_title='LC_TEMP', yaxis_title='2.5_um_count')
 st.plotly_chart(fig)
 
+
 merged_df['2.5_um_count'] = merged_df['2.5_um_count'].fillna(method='ffill').rolling(window=10, min_periods=1).mean()
 merged_df = merged_df.drop(['time_stamp'], axis=1)
 x = merged_df.drop(['2.5_um_count'], axis=1) 
 y = merged_df['2.5_um_count']  
-x_train, x_test, y_train, y_test = train_test_split(x,y, test_size=0.2, random_state=42)
-xgb = XGBRegressor(n_estimators=100, random_state=42)
-xgb.fit(x_train, y_train)
-y_pred = xgb.predict(x_test)
+xgb = model
 
 
 st.header("Feature importance")
