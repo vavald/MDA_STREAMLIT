@@ -8,8 +8,13 @@ import plotly.graph_objects as go
 import calendar
 from datetime import datetime
 
-df =  pd.read_csv('data/final_noise_data.csv')
-events = pd.read_csv('data/export41.csv')
+@st.cache
+def load_data():
+    df = pd.read_csv('data/final_noise_data.csv')
+    events = pd.read_csv('data/export41.csv')
+    return df, events
+
+df, events = load_data()
 
 st.set_page_config(page_title="Noise", page_icon="🔊", layout='wide', initial_sidebar_state='auto')
 st.title('Insights in the Noise Dataset 🔊')

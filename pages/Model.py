@@ -12,11 +12,16 @@ import plotly.graph_objects as go
 # Set up the main layout
 st.set_page_config(page_title="Gradient Boosting Model Explanation", page_icon="🌳", layout='wide', initial_sidebar_state='auto')
 
-data = pd.read_csv('data/model_input.csv',delimiter=';')
+@st.cache
+def load_data():
+    data = pd.read_csv('data/model_input.csv',delimiter=';')
+    # Load the mode
+    with open('data/xgboost_model.pkl', 'rb') as f:
+        model = pickle.load(f)
+    return data, model
 
-# Load the model
-with open('data/xgboost_model.pkl', 'rb') as f:
-    model = pickle.load(f)
+data, model = load_data()
+
 
 # Define a function to take user inputs
 def user_input(data):

@@ -1,8 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
 
 import pandas as pd
 import numpy as np
@@ -12,68 +7,25 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import time
 
-
-# In[ ]:
+@st.cache
+def load_data():
+    noise = pd.read_csv('data/final_noise_data.csv')
+    model =  pd.read_csv('data/model_input.csv', sep=';', index_col=0)
+    model = model[model['lcpeak_avg'] != 0]
+    return df, airquality
+noise, model = load_data()
 
 st.set_page_config(page_title="Weather - Telraam", page_icon="🌞", layout='wide', initial_sidebar_state='auto')
 st.title('Insights in the Model Dataset')
 
-
-noise = pd.read_csv('data/final_noise_data.csv')
-
-
-# In[ ]:
-
-
-model =  pd.read_csv('data/model_input.csv', sep=';', index_col=0)
-model = model[model['lcpeak_avg'] != 0]
-
-
-# In[ ]:
-
-
-print(model.info())
-
-
-# In[ ]:
-
-model.day_week.unique()
-
-# In[ ]:
-
-model.month.unique()
-
-# In[ ]:
-# get month names from number names
-
 import calendar
-
-# In[ ]:
 
 model['month'] = model['month'].apply(lambda x: calendar.month_name[x])
 
-# In[ ]:
-
-model.month.unique()
-
-# In[ ]:
-
-model.day_week.unique()
-
-# In[ ]:
-
 model['day_week'] = model['day_week'].apply(lambda x: calendar.day_name[x-1])
-
-# In[ ]:
-
-model.day_week.unique()
-
-# ### Plots  data
-# In[ ]:
 
 import plotly.express as px
 
-# In[ ]:
 
 st.header('Model - Weather dataset 🌞')
 

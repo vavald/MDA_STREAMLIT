@@ -8,11 +8,15 @@ import plotly.express as px
 from sklearn.model_selection import train_test_split
 from xgboost import XGBRegressor
 
-df = pd.read_csv("data/model_input.csv", delimiter=";")
-df.drop(['location'],axis=1,inplace=True)
-df = df[df['lceq_avg'] != 0]
+@st.cache
+def load_data():
+    df = pd.read_csv("data/model_input.csv", delimiter=";")
+    df.drop(['location'],axis=1,inplace=True)
+    df = df[df['lceq_avg'] != 0]
+    airquality = pd.read_csv("data/Air_Quality.csv", delimiter=",")
+    return df, airquality
+df, airquality = load_data()
 
-airquality = pd.read_csv("data/Air_Quality.csv", delimiter=",")
 airquality['time_stamp'] = pd.to_datetime(airquality['time_stamp'])
 airquality['month'] = airquality['time_stamp'].dt.month
 airquality['day_month'] = airquality['time_stamp'].dt.day
