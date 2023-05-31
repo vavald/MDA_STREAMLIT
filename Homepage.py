@@ -13,7 +13,6 @@ st.set_page_config(page_title="MDA Switzerland - Data Science Project", page_ico
 def load_data():
     # Load Data
     model_input = pd.read_csv("data/model_input.csv",delimiter=";")
-    df_weather=pd.read_csv('data/Weather_cleaned.csv')
     df_meta = pd.read_csv('data/01_Metadata_v2.csv')
     df_noise = pd.read_csv('data/final_noise_data.csv')
     df_noise['hour'] = df_noise['10_min_interval_start_time'].str[:2]
@@ -25,10 +24,10 @@ def load_data():
     model_input = model_input[model_input['lceq_avg'] != 0]
     df_noise['date'] = pd.to_datetime('2022' + '-' + df_noise['month'].astype(str) + '-' + df_noise['day_month'].astype(str) + ' ' + df_noise['10_min_interval_start_time'].astype(str))
 
-    return model_input, df_weather, df_meta, df_noise
+    return model_input, df_meta, df_noise
 
 # Use the function to load data
-model_input, df_weather, df_meta, df_noise = load_data()
+model_input, df_meta, df_noise = load_data()
 
 ####################
 # Homepage Map
