@@ -102,7 +102,7 @@ st.markdown("""The first thing that we will look into are the seperate noise eve
 # NOISE EVENTS
 
 # Convert 'result_timestamp' column to datetime
-events['result_timestamp'] = pd.to_datetime(events['result_timestamp'])
+events['result_timestamp'] = pd.to_datetime(events['result_timestamp'],format="%d/%m/%Y %H:%M:%S.%f")
 
 # PER MONTH
 # Create a dictionary to map month names to month numbers
