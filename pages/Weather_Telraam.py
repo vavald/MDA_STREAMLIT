@@ -171,7 +171,7 @@ st.markdown(
      This plot shows us a comparison between the behavior of the noise level and the behavio of the average autos
      every day of the week at the same time in intervals of 10 minutes.
     The colors represent the noise levels with its correspondent value. 
-    Higher level of noise tends to have a yellow color.
+ 
     Again, we get that higher average autos does not imply higher levels of noise. 
     However, the time influences the noise level.
     
