@@ -113,13 +113,12 @@ st.plotly_chart(fig)
 
 st.markdown(
     """
-     Scatter plot Temperature vs sun radiation every 10 minutes' 
+    Scatter plot Temperature vs sun radiation every 10 minutes' 
     The colors represent the noise levels with its correspondent value. 
     
    Between midnight and 12:10 pm,  we can see that these three variables increase.
-   However this tendency changes between 12:10 and 12:40 pm, the noise level increases regarless temperature and sun radiation.
-   
-  After 16:40 hr, as the sun radiation decreases, the noise level also decrease (regardless temperature) 
+   However this tendency changes between 12:10 and 12:40 pm, the noise level increases regardless temperature and sun radiation.
+   After 16:40 hr,  the sun radiation decreases and the noise level decrease (regardless temperature) 
 """
 )
 
@@ -166,17 +165,17 @@ st.markdown(
      Scatter plot Noise level of average cars per day every 10 minutes.
      This plot shows us a comparison between the behavior of the noise level and the behavior of the average autos
      every day of the week at the same time in intervals of 10 minutes.
-    The colors represent the noise levels with its correspondent value. 
+    The colors represent the noise levels with its correspondent values. 
  
     Again, we get that higher average autos does not imply higher levels of noise. 
-    However, the time influences the noise level.
+    However, time influences the noise level.
     
-    at 3:00 am the average autos increases,however the noise levels start to change. In this time we see on Saturday that 
-    the average autos is 0 but the noise level is 67.5. Wednesday, Thursday and Friday have a similar condition,
-    the average autos for these 3 days stay between 64-66 dB and the average autos is 0. 
+    At 3:00 am the average autos increases,however the noise levels start to change. In this time we see on Saturday that 
+    the average autos is 0 but the noise level is 67.5. Wednesday, Thursday and Friday have a similar condition and their
+    noise levels stay between 64dB and 66 dB when the average autos is 0. 
     
-    at 4:00 am, on Saturday we get a high noise level of 70.1 dB when the average autos is 0..
-             Wednesday and Thursday have the same situatio with 68dB and 70dB respectively, when the average autos is 0.
+    Saturday at 4:00 am, we get a high noise level of 70.1 dB when the average autos is 0.
+             Wednesday and Thursday have the same situation with 68dB and 70dB respectively, when the average autos is 0.
              
     Monday to Friday:
     Between 7:00 am and 7:50 am, the average autos increases and the regular week the noise level 
