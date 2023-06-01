@@ -10,7 +10,7 @@ from sklearn.ensemble import RandomForestRegressor
 import plotly.graph_objects as go
 
 # Set up the main layout
-st.set_page_config(page_title="Gradient Boosting Model Explanation", page_icon="🌳", layout='wide', initial_sidebar_state='auto')
+st.set_page_config(page_title="Gradient Boosting Model Explanation", page_icon="🤖", initial_sidebar_state='auto',layout= 'wide')
 
 @st.cache_data
 def load_data():
@@ -104,7 +104,7 @@ def user_input(data):
 input_df = user_input(data)
 
 # Display the app title and user input
-st.title('Gradient Boosting Model Explanation App 🌳')
+st.title('Gradient Boosting Model Explanation App 🤖')
 st.write('\n')
 #st.subheader('User Input Parameters:')
 #st.write(input_df)
@@ -118,13 +118,11 @@ if st.button("Click here to get the prediction"):
     if prediction[0][1] > 0.4:
         st.error('With the given parameters, the probability is high that the sound barrier of 75 dB(A) will be exceeded.')
     else:
-        st.success('With the given parameters, the sound barrier of 75 dB(A) will not be exceeded.')
+        st.success('With the given parameters, the sound barrier of 75 dB(A) will probably not be exceeded.')
 
 # Add an explanation section (you can expand this with SHAP or LIME-based explanations)
 st.subheader('Model Explanation:')
-st.markdown("""
-    In this section, we can provide a detailed explanation of the Gradient Boosting model. 
-""")
+
 
 # Calculate and display feature importances
 plt.figure(figsize=(5, 3))
@@ -150,9 +148,20 @@ fig.add_trace(go.Bar(
 ))
 
 fig.update_layout(title_text='Feature Importances', title_x=0.5, autosize=False, 
-                      width=900, height=700,
+                      width=1000, height=700,
                       xaxis_title="Relative Importance", yaxis_title="Features", 
                       template='plotly_white')
 
+
+
 st.plotly_chart(fig)
-st.write('As you can see the Features that are the most important in determining wether or not a certain sound level is going to be exceeded largely depends on the Solar Radiation, the Hour of the day and Day of the week, but also the average number of cars and pedestrians passing by during that time interval.')
+st.markdown('As you can see the elements that are the most important in determining wether or not a certain sound level is going to be exceeded largely depends on the Solar Radiation, the Hour of the day and Day of the week, but also the average number of cars and pedestrians passing by during that time interval.')
+    
+# create a collapsable section
+expander = st.expander("See Model Performance")
+expander.write("""
+        The chart above shows some numbers I picked for you.
+        I rolled actual dice for these, so they're *guaranteed* to
+        be random.
+        """)
+expander.image("https://static.streamlit.io/examples/dice.jpg")
