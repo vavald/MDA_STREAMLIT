@@ -51,6 +51,94 @@ fig = px.scatter(model, x="day_month", y="LC_RAD60", animation_frame="month", an
           title=" Sun radiation and noise level per day in one year")
 st.plotly_chart(fig)
 
+fig = px.scatter(model, x="day_month", y="lcpeak_avg", animation_frame="month", animation_group="LC_RAD60",
+           color="LC_RAD60", hover_name="lcpeak_avg",
+           size_max=100, range_x=[-2,33], range_y=[50,90],
+          title=" Sun radiation and noise level per day in one year")
+st.plotly_chart(fig)
+
+from sklearn.preprocessing import MinMaxScaler
+
+# normalize the 'lcpeak_avg' column
+scaler = MinMaxScaler()
+model['lcpeak_avg_norm'] = scaler.fit_transform(model[['lcpeak_avg']])
+model['lcpeak_avg_norm'] = model['lcpeak_avg_norm'].clip(0, 1)
+
+fig = px.scatter(model, 
+                 x="day_month", 
+                 y="LC_RAD60", 
+                 animation_frame="month", 
+                 animation_group="lcpeak_avg",
+                 color="lcpeak_avg", 
+                 hover_name="lcpeak_avg",
+                 color_continuous_scale=["white", "white"], # Set color scale as white
+                 size_max=55, 
+                 range_x=[-2,33], 
+                 range_y=[-45,871],
+                 title=" Sun radiation and noise level per day in one year")
+
+# Add opacity based on normalized 'lcpeak_avg'
+fig.update_traces(marker=dict(opacity=model['lcpeak_avg_norm'].tolist()))
+
+st.plotly_chart(fig)
+
+import plotly.graph_objects as go
+
+# Create animation frames
+frames = []
+for month in model['month'].sort_values().unique():
+    filtered_df = model[model['month'] == month]
+    frames.append(go.Frame(data=[go.Bar(x=filtered_df['day_month'], y=filtered_df['LC_RAD60'],
+                                        marker=dict(color=filtered_df['lcpeak_avg'],
+                                                    colorscale='RdYlGn', # 'RdYlGn' stands for Red, Yellow, Green
+                                                    cmin=filtered_df['lcpeak_avg'].min(),
+                                                    cmax=filtered_df['lcpeak_avg'].max(),
+                                                    colorbar=dict(title='Noise Level')))],
+                           name=str(month)))  # name the frame with the corresponding month
+
+# Create initial frame
+init_data = model[model['month'] == model['month'].sort_values().unique()[0]]
+fig = go.Figure(
+    data=[go.Bar(x=init_data['day_month'], y=init_data['LC_RAD60'],
+                 marker=dict(color=init_data['lcpeak_avg'],
+                             colorscale='RdYlGn',
+                             cmin=init_data['lcpeak_avg'].min(),
+                             cmax=init_data['lcpeak_avg'].max(),
+                             colorbar=dict(title='Noise Level')))],
+    layout=go.Layout(
+        title_text="Sun radiation and noise level per day in one year",
+        sliders=[dict(steps=[dict(method='animate',
+                                  args=[[frame['name']]],
+                                  label=frame['name']) for frame in frames],
+                      transition=dict(duration=300, easing='cubic-in-out'))],
+        updatemenus=[dict(type="buttons",
+                          buttons=[dict(label="Play",
+                                        method="animate",
+                                        args=[None])])]),
+    frames=frames
+)
+
+st.plotly_chart(fig)
+
+fig = px.scatter(model, x="day_month", y="LC_RAD60", animation_frame="month", animation_group="lcpeak_avg",
+           color="lcpeak_avg", hover_name="lcpeak_avg",
+           size_max=55, range_x=[-2,33], range_y=[-45,871],
+           color_continuous_scale=["red", "green"],
+           title=" Sun radiation and noise level per day in one year")
+
+st.plotly_chart(fig)
+
+fig = px.scatter(model, x="day_month", y="LC_RAD60", animation_frame="month", animation_group="lcpeak_avg",
+           color="lcpeak_avg", hover_name="lcpeak_avg",
+           size_max=55, range_x=[-2,33], range_y=[-45,871],
+           color_continuous_scale="RdYlGn_r",
+           title=" Sun radiation and noise level per day in one year")
+
+fig.update_traces(marker=dict(opacity=0.5))
+
+st.plotly_chart(fig)
+
+
 # In[ ]:
 
 st.markdown(
