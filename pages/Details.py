@@ -2,7 +2,7 @@ import streamlit as st
 
 st.set_page_config(page_title="Information", page_icon="ℹ️", layout='wide', initial_sidebar_state='auto')
 
-st.title("Some explanation on the project.")
+st.title("Some explanation on the project    ℹ️")
 
 st.markdown("""In context of the course 'Modern Data Analytics' at the KU Leuven,
         a group project is used as the evaluation criteria.
@@ -30,6 +30,33 @@ st.markdown("""The two datasets given are the noise dataset on the Naamsestraat 
         There are some factors that are important when dealing with noise, 
         as is also visible when looking at the seperate noise events with given distributions as to what might have caused it.
         Traffic is one of them, where we tried to include traffic counts via Telraam data. 
+        """)
+
+st.markdown("""The first dataset to discuss is the data used for the implemented model. 
+        This is a combination of multiple parameters from other datasets, discussed below.
+        The used :blue[**model input**] data is preprocessed to get a CSV file with the following parameters:
+        location of the sensor, the date (consisting of month and day of the month), the day of the week,
+        the time (consisting of the hour and minute), the humidity, the dewpoint temperature, n, the radiation,
+        the rain intensity and the daily rain, the wind direction and speed, the rad60, 
+        the average amount of trucs, cars and pedestrians, v85, lceq_avg and lcpeak_avg.
+        There are also two columns added to indicate weather and telraam data. 
+        """)
+st.markdown("""The used :blue[**noise**] data is preprocessed to get a CSV file with the following parameters:
+        location of the sensor, date (consisting of year, month and day of the month), the day of the week,
+        the starting time of each 10 minute interval, lceq_avg and lcpeak_avg. 
+        """)
+st.markdown("""The used :blue[**noise events**] data is preprocessed to get a CSV file with the following parameters:
+        the object ID, the description of the sensor (location), the timestamp,
+        the noise event laeq model ID and unit, the detected certainty and unit and to finish
+        the detected class and unit. 
+        """)
+st.markdown("""The used :blue[**weather**] data is preprocessed to get a CSV file with the following parameters:
+        the ID of the sensor, the date (consisting of year, month and day of the month), the day of the week, 
+        the starting time of each 10 minute interval, the humidity, the dewpoint temperature, n, the radiation,
+        the rain intensity and the daily rain, the wind direction and speed, the rad60 and the temperature.
+        """)
+st.markdown("""The used :blue[**air quality**] data is preprocessed to get a CSV file with the following parameters:
+        a timestamp and the particle count
         """)
 
 st.header('Overview of the process')
