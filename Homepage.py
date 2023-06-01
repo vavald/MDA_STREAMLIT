@@ -67,12 +67,23 @@ date_range = pd.date_range(start='2022-01-01', end='2022-12-31', freq='D')
 df_date_range = pd.DataFrame(date_range, columns=['date'])
 df_noise_location = pd.merge(df_date_range, df_noise_location, on='date', how='left')
 
+# list of sensors without option
+sensors2 = ['Please select a sensor','Naamsestraat 35','Naamsestraat 57','Naamsestraat 62','His & Hears','Calvariekapel','Parkstraat 2','Naamsestraat 81','Vrijthof']
+# remove the selected sensor from the list
+sensors2.remove(option)
+
+# drop down menu with sensors2
+option2 = st.selectbox('Which sensor would you like to compare with ?',sensors2)
+df_noise_location2 = df_noise[df_noise['location'] == option2]
+date_range2 = pd.date_range(start='2022-01-01', end='2022-12-31', freq='D')
+df_date_range2 = pd.DataFrame(date_range2, columns=['date'])
+df_noise_location2 = pd.merge(df_date_range2, df_noise_location2, on='date', how='left')
 
 # create button to show bar chart
 if st.button('Show Bar Chart'):
     # create a bar chart showing lcpeak_avg where the sensor is selected using plotly.graph_objects
     if option == 'Please select a sensor':
-        st.error('Please select a sensor')
+        st.error('Please select a sensor in the first drop-down menu')
     else:
 
         # Resample your dataframe to get the average lcpeak_avg per day
@@ -111,8 +122,80 @@ if st.button('Show Bar Chart'):
 
         st.plotly_chart(fig, use_container_width=True)
 
-# create button to compare two sensors next to the other button
-if st.button('Compare with another sensor'):
-    # create dropdown menu to select a second sensor
-    option2 = st.selectbox('Which sensor would you like to compare with ?',('Please select a sensor','Naamsestraat 35','Naamsestraat 57','Naamsestraat 62','His & Hears','Calvariekapel','Parkstraat 2','Naamsestraat 81','Vrijthof'))
+# create button to show both bar charts
+if st.button('Show Both Bar Charts'):
+    if option == 'Please select a sensor' or option2 == 'Please select a sensor':
+        st.error('Please select two sensors')
+    else: 
 
+        # Resample your dataframe to get the average lcpeak_avg per day
+        df_daily_avg = df_noise_location.resample('D', on='date')['lcpeak_avg'].mean()
+
+        # Calculate 7-day moving average with a minimum of 1 observation
+        df_noise_location['lcpeak_avg_smooth'] = df_noise_location['lcpeak_avg'].rolling(window=7, min_periods=1,center=True).mean()
+
+        # Reset index so 'date' becomes a column
+        df_noise_location.reset_index(inplace=True)
+
+        # Create a figure with secondary y-axis
+        fig = make_subplots(specs=[[{"secondary_y": True}]])
+
+        fig.add_trace(
+            go.Scatter(x=df_noise_location['date'], y=df_noise_location['lcpeak_avg_smooth'], mode='lines', name='lcpeak_avg_smooth', line_shape='spline'),
+            secondary_y=False
+        )
+
+        # Get the dates where data is missing
+        missing_data_dates = df_daily_avg[df_daily_avg.isna()].index
+
+        # Add vertical red lines for missing dates
+        for date in missing_data_dates:
+            fig.add_shape(
+                type="line",
+                xref="x", yref="paper",
+                x0=date, y0=0, x1=date, y1=1,
+                line=dict(color="tomato", width=4),
+                secondary_y=True,
+            )
+
+        fig.update_layout(title_text='7-day Rolling Average sound level for ' + option,
+        )
+        fig.update_yaxes(title_text="Sound Level (dB)", automargin=True)
+
+        st.plotly_chart(fig, use_container_width=True)
+        ########################
+        # Resample your dataframe to get the average lcpeak_avg per day
+        df_daily_avg2 = df_noise_location2.resample('D', on='date')['lcpeak_avg'].mean()
+
+        # Calculate 7-day moving average with a minimum of 1 observation
+        df_noise_location2['lcpeak_avg_smooth'] = df_noise_location2['lcpeak_avg'].rolling(window=7, min_periods=1,center=True).mean()
+
+        # Reset index so 'date' becomes a column
+        df_noise_location2.reset_index(inplace=True)
+
+        # Create a figure with secondary y-axis
+        fig = make_subplots(specs=[[{"secondary_y": True}]])
+
+        fig.add_trace(
+            go.Scatter(x=df_noise_location2['date'], y=df_noise_location2['lcpeak_avg_smooth'], mode='lines', name='lcpeak_avg_smooth', line_shape='spline'),
+            secondary_y=False
+        )
+
+        # Get the dates where data is missing
+        missing_data_dates = df_daily_avg2[df_daily_avg2.isna()].index
+
+        # Add vertical red lines for missing dates
+        for date in missing_data_dates:
+            fig.add_shape(
+                type="line",
+                xref="x", yref="paper",
+                x0=date, y0=0, x1=date, y1=1,
+                line=dict(color="tomato", width=4),
+                secondary_y=True,
+            )
+
+        fig.update_layout(title_text='7-day Rolling Average sound level for ' + option2,
+        )
+        fig.update_yaxes(title_text="Sound Level (dB)", automargin=True)
+
+        st.plotly_chart(fig, use_container_width=True)
