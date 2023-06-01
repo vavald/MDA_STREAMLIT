@@ -84,12 +84,11 @@ st.markdown(
     Beneath you can see a plot describing the sun radiation versus the noise level per day, every 10 minutes. 
     This shows us the behaviour of the noise level every day of the week at the same time in intervals of 10 minutes.
     The colours represent the noise levels with their corresponding value. 
- 
-    Unquestionably, from Monday to Friday as the sun radiation increases with time and the noise levels too.
-    However in the weekend (Friday, Saturday and Sunday) we can find higher levels of sun radiation but the noise levels are
-    lower than the rest days of the week.
+    Unquestionably, from Monday to Friday when the sun radiation increases with time, the noise levels do too.
+    However, in the weekend (Friday, Saturday and Sunday) we can find higher levels of sun radiation, but the noise levels are
+    remain lower than the rest of the weekdays.
     
-    From midnight to 6:10 am, sun radiation is low and the noise too.
+    From midnight to 6:10 AM, sun radiation is logically low and the noise most of the time as well.
     
 """
 )
@@ -113,14 +112,14 @@ st.plotly_chart(fig)
 
 st.markdown(
     """
-    Scatter plot Temperature vs sun radiation every 10 minutes' 
-    The colors represent the noise levels with its correspondent value. 
+    The scatter plot of temperature vs sun radiation every 10 minutes is given below.
+    The colours represent the noise levels with its correspondent value. 
     
-   Between midnight and 12:10 pm,  we can see that these three variables increase.
-   However this tendency changes between 12:10 and 12:40 pm, the noise level increases regardless temperature and sun radiation.
-   After 16:40 hr,  the sun radiation decreases and the noise level decrease (regardless temperature) 
-"""
-)
+    Between midnight and 12:10 PM, we can see that these three variables increase.
+    However, this tendency changes between 12:10 and 12:40 PM, 
+    the noise levels increase regardless of temperature and sun radiation.
+    After 16:40, the sun radiation and the noise level decreases (regardless of temperature).
+    """)
 
 
 # In[ ]:
@@ -142,10 +141,11 @@ st.markdown(
     the average cars per day. 
     The colors represent the noise levels with its correspondent value. 
     
-    We obtained that higher average of autos does not imply higher noise level. One example of this situation occurs 
-    in the 14th day,  we can see a noise level of 73.56 dB with a averge of autos of 80 and a noise level of 80,20dB is obtained when the average autos is 42.
-    Besides, we got that different average autos can offer the same noise level ( in different periods).
-    In the 27th day of this month a noise level of 81 dB is found when the average autos are 30 and  54,47.
+    We obtained that higher average of cars does not imply higher noise level. One example of this situation occurs 
+    on the 14th day, we can see a noise level of 73.56 dB with an average of 80 cars 
+    and a noise level of 80,20 dB is obtained when the average cars are 42.
+    Besides, we got that different average car can cause identical noise levels (in different periods).
+    On the 27th day of the month, a noise level of 81 dB is found when the average cars have the value of 30 and 54,47.
     
 """
 )
@@ -160,31 +160,31 @@ st.plotly_chart(fig)
 
 st.markdown(
     """
-     Scatter plot Noise level of average cars per day every 10 minutes.
-     This plot shows us a comparison between the behavior of the noise level and the behavior of the average autos
-     every day of the week at the same time in intervals of 10 minutes.
-    The colors represent the noise levels with its correspondent values. 
- 
-    Again, we get that higher average autos does not imply higher levels of noise. 
-    However, time influences the noise level.
+    Next up is the scatter plot with the noise level of average cars per day every 10 minutes.
+    This plot shows us a comparison between the behaviour of the noise level and the behaviour of the average cars,
+    every day of the week at the same time in intervals of 10 minutes.
+    The colours represent the noise levels with its corresponding values. 
+    Again, we get that a higher average of cars does not directly imply higher levels of noise. 
+    However, time does influence the noise level.
     
-    At 3:00 am the average autos increases,however the noise levels start to change. In this time we see on Saturday that 
-    the average autos is 0 but the noise level is 67.5. Wednesday, Thursday and Friday have a similar condition and their
-    noise levels stay between 64dB and 66 dB when the average autos is 0. 
-    
-    Saturday at 4:00 am, we get a high noise level of 70.1 dB when the average autos is 0.
-             Wednesday and Thursday have the same situation with 68dB and 70dB respectively, when the average autos is 0.
+    At 3:00 AM the average amount of cars increases,
+    however the noise levels start to change. 
+    At this time window, we see on Saturday that the average amount of cars is 0, but the noise level is 67.5. 
+    Wednesday, Thursday and Friday have a similar trend and their
+    noise levels stay between 64 and 66 dB when the average of cars is 0. 
+    Saturday at 4:00 AM, we get a high noise level of 70.1 dB when the average autos is 0.
+    Wednesday and Thursday have the same situation with 68 dB and 70 dB respectively, when the average of cars is 0.
              
     Monday to Friday:
-    Between 7:00 am and 7:50 am, the average autos increases and the regular week the noise level 
-    increases too. But this increasing is not proportional, again higher average autos does not imply higher noise level.
-    After 4:00 pm, the noise level decreases.
-    
-   Saturday and Sunday:
-   Most of the time, until 7:10 pm, the noise level was "significant" lower than the other days.
+    Between 7:00 AM and 7:50 AM, the average of cars increases and in a regular week, the noise levels
+    increase too. But this increase is not proportional, again a higher average of cars does not imply higher noise levels.
+    After 4:00 PM, the noise level decreases.
+    Saturday and Sunday:
+    Most of the time, until 7:10 PM, the noise levels were 'significantly' lower than the other days.
    
-   However, Friday, Saturday and Sunday at 7:10 pm, we can see that the noise level starts to increase and the 
-   average autos is smaller than the afternoon time in the whole week.
+    However, Friday, Saturday and Sunday at 7:10 PM, we can see that the noise level starts to increase and the 
+    average amount of cars driving around is smaller than the afternoon period during the whole week.
+    All this can be linked to more weekend-related activities.
 """
 )
 
