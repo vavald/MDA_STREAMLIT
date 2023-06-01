@@ -33,8 +33,7 @@ st.markdown(
     """
    Below you can see a plot with the sun radiation and noise level per day in one year. 
    The colours represent the noise levels with its corresponding value. 
-   Higher level of noise tends to have a yellow colour.  
-   As the months go by, the solar radiation increases and the noise levels increase too, especially in May and June.
+   The solar radiation increases and the noise levels increase too, especially in May and June.
    Despite the sun radiation in July being higher, the noise levels appear to be lower 
    (eg. people on vacation/no students in Leuven).
    
@@ -58,7 +57,6 @@ st.markdown(
     """
    The scatter plot shows us the relationship between Temperature and Noise level per day in one year,
    where the colours respresent the noise levels with their corresponding value. 
-   Higher level of noise tends to have a yellow color.
    In January and February, both the temperature and the noise levels are high. 
    In March there is a difference in comparison to the first two months of the year:
    the temperature increases as well as the noise levels. 
@@ -86,8 +84,7 @@ st.markdown(
     Beneath you can see a plot describing the sun radiation versus the noise level per day, every 10 minutes. 
     This shows us the behaviour of the noise level every day of the week at the same time in intervals of 10 minutes.
     The colours represent the noise levels with their corresponding value. 
-    Higher level of noise tends to have a yellow color.
-    
+ 
     Unquestionably, from Monday to Friday as the sun radiation increases with time and the noise levels too.
     However en the weekend (Friday, Saturday and Sunday) we can find higher levels of sun radiation but the noise levels are
     lower than the rest days of the week.
@@ -121,7 +118,6 @@ st.markdown(
     """
      Scatter plot Temperature vs sun radiation every 10 minutes' 
     The colors represent the noise levels with its correspondent value. 
-    Higher level of noise tends to have a yellow color.
     
    between midnight until 12:10 pm,  we can see that noise level increases as the temperature and 
    the sun radiation increase too.
@@ -150,7 +146,6 @@ st.markdown(
     The scatter plot 'Noise level of average cars per day in one month' shows us the noise level produced by
     the average cars per day. 
     The colors represent the noise levels with its correspondent value. 
-    Higher level of noise tends to have a yellow color.
     
     For example, in the 14th day we can see a noise level of 73.56 dB with a averge of autos of 80. 
     However it is important to note that higher average of autos does not imply higher noise level 
