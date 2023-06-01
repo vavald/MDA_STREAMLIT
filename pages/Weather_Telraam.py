@@ -91,9 +91,6 @@ st.markdown(
     
     From midnight to 6:10 am, sun radiation is low and the noise too.
     
-    Monday to Friday: between 6:40 am and 12:10 pm, the sun radiation increases and the noise too.
-                     from 12:12 pm to 4:00 pm , sun radiation increases but noise level not.
-                     After 4:pm sun radiation decreases and noise level too.
 """
 )
 
@@ -119,11 +116,10 @@ st.markdown(
      Scatter plot Temperature vs sun radiation every 10 minutes' 
     The colors represent the noise levels with its correspondent value. 
     
-   between midnight until 12:10 pm,  we can see that noise level increases as the temperature and 
-   the sun radiation increase too.
+   Between midnight until 12:10 pm,  we can see that these three variables increase.
    However this tendency changes between 12:10 and 12:40 pm, the noise level increases regarless temperature and sun radiation.
    
-   After 16:40 hr, as the sun radiation decreases, the noise level also decrease (regardless temperature) 
+  After 16:40 hr, as the sun radiation decreases, the noise level also decrease (regardless temperature) 
 """
 )
 
@@ -168,7 +164,7 @@ st.plotly_chart(fig)
 st.markdown(
     """
      Scatter plot Noise level of average cars per day every 10 minutes.
-     This plot shows us a comparison between the behavior of the noise level and the behavio of the average autos
+     This plot shows us a comparison between the behavior of the noise level and the behavior of the average autos
      every day of the week at the same time in intervals of 10 minutes.
     The colors represent the noise levels with its correspondent value. 
  
@@ -185,14 +181,9 @@ st.markdown(
     Monday to Friday:
     Between 7:00 am and 7:50 am, the average autos increases and the regular week the noise level 
     increases too. But this increasing is not proportional, again higher average autos does not imply higher noise level.
-    
-    Between 10:00 am and 12:10 am he average autos increases and the regular week the noise level 
-    increases too. These levels are higher than the previous hours.
-    
     After 4:00 pm, the noise level decreases.
     
    Saturday and Sunday:
-   
    Most of the time, until 7:10 pm, the noise level was "significant" lower than the other days.
    
    However, Friday, Saturday and Sunday at 7:10 pm, we can see that the noise level starts to increase and the 
