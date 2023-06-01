@@ -143,12 +143,11 @@ st.markdown(
     The colors represent the noise levels with its correspondent value. 
     
     For example, in the 14th day we can see a noise level of 73.56 dB with a averge of autos of 80. 
-    However it is important to note that higher average of autos does not imply higher noise level 
-    We can see for example in the 14th day that a noise level of  80,20dB is obtained when the average autos is 41,69.
-    Also in the day 27 we can find two picks at the same day with a different number of average autos:
-    Noise level of 81 dB when the average autos is 30 and again, noise level of 81,2db when the average autos is 54,47
-     
-     Therefore, different average autos can offer the same noise level ( in different periods)
+    However it is important to note that higher average of autos does not imply higher noise level because at the same day
+    a noise level of 80,20dB is obtained when the average autos is 41,69.
+   In the 27th day of this month we can find two different average autos with the same noise level:
+    A noise level of 81 dB when the average autos are 30 and  54,47.
+    Therefore, different average autos can offer the same noise level ( in different periods)
 """
 )
 
