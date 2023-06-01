@@ -116,7 +116,7 @@ st.markdown(
      Scatter plot Temperature vs sun radiation every 10 minutes' 
     The colors represent the noise levels with its correspondent value. 
     
-   Between midnight until 12:10 pm,  we can see that these three variables increase.
+   Between midnight and 12:10 pm,  we can see that these three variables increase.
    However this tendency changes between 12:10 and 12:40 pm, the noise level increases regarless temperature and sun radiation.
    
   After 16:40 hr, as the sun radiation decreases, the noise level also decrease (regardless temperature) 
