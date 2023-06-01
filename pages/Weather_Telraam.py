@@ -86,7 +86,7 @@ st.markdown(
     The colours represent the noise levels with their corresponding value. 
  
     Unquestionably, from Monday to Friday as the sun radiation increases with time and the noise levels too.
-    However en the weekend (Friday, Saturday and Sunday) we can find higher levels of sun radiation but the noise levels are
+    However in the weekend (Friday, Saturday and Sunday) we can find higher levels of sun radiation but the noise levels are
     lower than the rest days of the week.
     
     From midnight to 6:10 am, sun radiation is low and the noise too.
