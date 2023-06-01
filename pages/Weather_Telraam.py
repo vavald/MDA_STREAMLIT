@@ -22,8 +22,8 @@ import calendar
 
 model['month'] = model['month'].apply(lambda x: calendar.month_name[x])
 
-model['day_week'] = model['day_week'].apply(lambda x: calendar.day_name[x-1])
-
+model['day_week'] = model['day_week'].map({1:'Monday', 2:'Tuesday', 3:'Wednesday', 4:'Thursday', 5:'Friday', 6:'Saturday', 7:'Sunday'})
+model['day_week'] = pd.Categorical(model['day_week'], categories=['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], ordered=True)
 import plotly.express as px
 
 
@@ -42,9 +42,7 @@ st.markdown(
    however the noise levels are higher (eg. because of Christmas Eve and other holidays).  """
 )
 
-
-# In[ ]:
-
+if False: """"
 fig = px.scatter(model, x="day_month", y="LC_RAD60", animation_frame="month", animation_group="lcpeak_avg",
            color="lcpeak_avg", hover_name="lcpeak_avg",
            size_max=55, range_x=[-2,33], range_y=[-45,871],
@@ -126,18 +124,20 @@ fig = px.scatter(model, x="day_month", y="LC_RAD60", animation_frame="month", an
            color_continuous_scale=["red", "green"],
            title=" Sun radiation and noise level per day in one year")
 
-st.plotly_chart(fig)
-
+st.plotly_chart(fig)"""
+#################
 fig = px.scatter(model, x="day_month", y="LC_RAD60", animation_frame="month", animation_group="lcpeak_avg",
            color="lcpeak_avg", hover_name="lcpeak_avg",
            size_max=55, range_x=[-2,33], range_y=[-45,871],
            color_continuous_scale="RdYlGn_r",
            title=" Sun radiation and noise level per day in one year")
-
+fig.update_xaxes(title_text='Day of the Month')
+fig.update_yaxes(title_text='Weighted Solar Radiation (W/m2)')
+fig.update_coloraxes(colorbar_title='Sound Level')
 fig.update_traces(marker=dict(opacity=0.5))
 
 st.plotly_chart(fig)
-
+#####################
 
 # In[ ]:
 
@@ -158,10 +158,17 @@ st.markdown(
 
 
 # In[ ]:
+# create model1 = model where lcpeak_avg !=0
+model1 = model[model['LC_TEMP'] != 0]
 
-fig = px.scatter(model, x="day_month", y="LC_TEMP", animation_frame="month", animation_group="lcpeak_avg",
+fig = px.scatter(model1, x="day_month", y="LC_TEMP", animation_frame="month", animation_group="lcpeak_avg",
          color="lcpeak_avg", hover_name="lcpeak_avg",range_y=[-15,45],
-            range_x=[-1,31.5],title=" Temperature vs Noise level per day in one year" )
+         color_continuous_scale="RdYlGn_r",
+         range_x=[-1,31.5],title=" Temperature vs Noise level per day in one year" )
+fig.update_xaxes(title_text='Day of the Month')
+fig.update_yaxes(title_text='Temperature (°C)')
+fig.update_coloraxes(colorbar_title='Sound Level')
+fig.update_traces(marker=dict(opacity=0.5))
 st.plotly_chart(fig)
 
 
@@ -187,13 +194,15 @@ st.markdown(
 # add column hour:minute to noise data
 model['10_min_interval_start_time'] = model['hour'].astype(str) + ':' + model['minute'].astype(str)
 
-
-# In[ ]:
-
-fig = px.scatter(model, x="day_week", y="LC_RAD60", animation_frame="10_min_interval_start_time", animation_group="lcpeak_avg",
+fig = px.scatter(model.sort_values(["hour","minute",'day_week']), x="day_week", y="LC_RAD60", animation_frame="10_min_interval_start_time", animation_group="lcpeak_avg",
            color="lcpeak_avg", hover_name="lcpeak_avg",
-           size_max=55, range_x=[-0.5,7.5], range_y=[-45,871],
+           size_max=55,  range_y=[0,871],
+           color_continuous_scale="RdYlGn_r",
           title=" Sun radiation vs Noise level per day every 10 minutes")
+fig.update_xaxes(title_text='Day of the Week')
+fig.update_yaxes(title_text='Weighted Solar Radiation (W/m2)')
+fig.update_coloraxes(colorbar_title='Sound Level')
+fig.update_traces(marker=dict(opacity=0.5))
 st.plotly_chart(fig)
 
 # In[ ]:
@@ -215,8 +224,13 @@ st.markdown(
 fig = px.scatter(model, x="LC_TEMP", y="LC_RAD60", animation_frame="10_min_interval_start_time", animation_group="lcpeak_avg",
            color="lcpeak_avg", hover_name="lcpeak_avg",
            size_max=55, range_x=[-1.5,42], range_y=[-45,871],
+           color_continuous_scale="RdYlGn_r",
           title=" Temperature vs sun radiation every 10 minutes")
+fig.update_xaxes(title_text='Temperature (°C)')
+fig.update_yaxes(title_text='Weighted Solar Radiation (W/m2)')
+fig.update_coloraxes(colorbar_title='Sound Level')
 
+fig.update_traces(marker=dict(opacity=0.7))
 st.plotly_chart(fig)
 
 # In[ ]:
@@ -243,7 +257,14 @@ st.markdown(
 fig = px.scatter(model, x="day_month", y="avg_cars", animation_frame="day_month", animation_group="lcpeak_avg",
            color="lcpeak_avg", hover_name="lcpeak_avg",
            size_max=55, range_x=[-2,33], range_y=[-2,100],
+           color_continuous_scale="RdYlGn_r",
           title=" Noise level of average cars per day in one month")
+fig.update_xaxes(title_text='Day of the Month')
+fig.update_yaxes(title_text='Average Number of Cars')
+fig.update_coloraxes(colorbar_title='Sound Level')
+
+fig.update_traces(marker=dict(opacity=0.7))
+
 st.plotly_chart(fig)
 
 st.markdown(
@@ -277,10 +298,15 @@ st.markdown(
 )
 
 
-# In[ ]:
-
-fig = px.scatter(model, x="day_week", y="avg_cars", animation_frame="10_min_interval_start_time", animation_group="lcpeak_avg",
+fig = px.scatter(model.sort_values(["hour","minute",'day_week']), x="day_week", y="avg_cars", animation_frame="hour", animation_group="lcpeak_avg",
            color="lcpeak_avg", hover_name="lcpeak_avg",
-           size_max=55, range_x=[-0.5,8], range_y=[-2,100],
-          title=" Noise level of average cars per day every 10 minutes")
+           size_max=55,  range_y=[-2,90],
+           color_continuous_scale="RdYlGn_r",
+           title=" Noise level of average cars per day every 10 minutes")
+fig.update_xaxes(title_text='Day of the Week')
+fig.update_yaxes(title_text='Average Number of Cars')
+fig.update_coloraxes(colorbar_title='Sound Level')
+
+fig.update_traces(marker=dict(opacity=0.7))
+
 st.plotly_chart(fig)
