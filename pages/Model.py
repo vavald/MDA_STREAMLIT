@@ -9,6 +9,7 @@ import sklearn
 from sklearn.ensemble import RandomForestRegressor
 import plotly.graph_objects as go
 from streamlit_extras.dataframe_explorer import dataframe_explorer
+from streamlit_extras.echo_expander import echo_expander
 
 # Set up the main layout
 st.set_page_config(page_title="Gradient Boosting Model Explanation", page_icon="🤖", initial_sidebar_state='auto',layout= 'wide')
@@ -157,17 +158,16 @@ fig.update_layout(title_text='Feature Importances', title_x=0.5, autosize=False,
 
 st.plotly_chart(fig)
 st.markdown('As you can see the elements that are the most important in determining wether or not a certain sound level is going to be exceeded largely depends on the Solar Radiation, the Hour of the day and Day of the week, but also the average number of cars and pedestrians passing by during that time interval.')
-    
+
+st.markdown('In the drop-down menu below you can filter the dataset that has been used for training the model. You can also download the filtered dataset as a CSV file for further analysis.')
+filtered_df = dataframe_explorer(data, case=True)
+
 # create a collapsable section
-expander = st.expander("Reveal Used Dataframe")
-expander.write("""
-        here you can filter on the data and download it 
-        """)
-filtered_df = dataframe_explorer(data, case=False)
+expander = st.expander("Reveal Filtered Dataframe")
 expander.dataframe(filtered_df, use_container_width=True)
 expander.download_button(
     label="Download data as CSV",
-    data=csv,
+    data=filtered_df.to_csv(),
     file_name='model_data.csv',
     mime='text/csv',
 )
