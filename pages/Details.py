@@ -56,8 +56,13 @@ st.markdown("""The used :blue[**weather**] data is preprocessed to get a CSV fil
         the rain intensity and the daily rain, the wind direction and speed, the rad60 and the temperature.
         """)
 st.markdown("""The used :blue[**air quality**] data is preprocessed to get a CSV file with the following parameters:
-        a timestamp and the particle count
-        """)
+        a timestamp and the PM2.5 particles count. Monitoring this air quality is important because it is associated with
+        respiratory and cardiovascular diseases. The dataset is combined with the noise and weather data to see if there
+        is a correlation between the features and the PM2.5 particles count. The sensor gathering the data is located in Sluispark
+        in Leuven, which isn't in close proximity to Naamsestraat, which means that the correlation is not susbtantial between
+        the noise data and the air quality data. However, through model training with the XGBoost regressor, we identify important features that contribute to predicting the level of PM2.5 such as the date, daily rainfall, wind speed, temperature and other weather parameters.
+        These findings suggest that the weather conditions and seasonal patterns play a role in predicting the level of air quality. Other factors such as traffic-related variables show a smaller importance, albeit still influential. 
+""")
 
 st.header('Overview of the process')
 
