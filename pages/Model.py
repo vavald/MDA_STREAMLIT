@@ -8,6 +8,7 @@ import pickle
 import sklearn
 from sklearn.ensemble import RandomForestRegressor
 import plotly.graph_objects as go
+from streamlit_extras.dataframe_explorer import dataframe_explorer
 
 # Set up the main layout
 st.set_page_config(page_title="Gradient Boosting Model Explanation", page_icon="🤖", initial_sidebar_state='auto',layout= 'wide')
@@ -158,10 +159,15 @@ st.plotly_chart(fig)
 st.markdown('As you can see the elements that are the most important in determining wether or not a certain sound level is going to be exceeded largely depends on the Solar Radiation, the Hour of the day and Day of the week, but also the average number of cars and pedestrians passing by during that time interval.')
     
 # create a collapsable section
-expander = st.expander("See Model Performance")
+expander = st.expander("Reveal Used Dataframe")
 expander.write("""
-        The chart above shows some numbers I picked for you.
-        I rolled actual dice for these, so they're *guaranteed* to
-        be random.
+        here you can filter on the data and download it 
         """)
-expander.image("https://static.streamlit.io/examples/dice.jpg")
+filtered_df = dataframe_explorer(data, case=False)
+expander.dataframe(filtered_df, use_container_width=True)
+expander.download_button(
+    label="Download data as CSV",
+    data=csv,
+    file_name='model_data.csv',
+    mime='text/csv',
+)
