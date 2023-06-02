@@ -28,10 +28,10 @@ st.header('Getting familiar with the data')
 
 # Add explanation
 st.markdown("""The noise data consisted of 3 distinctive sets: 
-noise levels measured every second raw, processed and noise events with a probability per type.
-To make the analysis a bit more coherent and logical, a aggregation range of 10 minutes was decided on.
-This is the time that we expect when residents get aggitated, call the police and the latter arrive on scene.
-Let us now look at some initial data concerning the noise levels, based on the important parameters from the model.""")
+        noise levels measured every second raw, processed and noise events with a probability per type.
+        To make the analysis a bit more coherent and logical, a aggregation range of 10 minutes was decided on.
+        This is the time that we expect when residents get aggitated, call the police and the latter arrive on scene.
+        Let us now look at some initial data concerning the noise levels, based on the important parameters from the model.""")
 
 # Add explanation
 st.markdown("""Between months, there is not much difference to detect. 
@@ -56,23 +56,22 @@ st.plotly_chart(fig)
 
 # Add explanation
 st.markdown("""An obvious remark here is that Sunday has the lowest median and quartiles, but the highest outliers. 
-                This is something to consider when using the predictive option on the model page.
-                We recommend you to click on the legend items to disable them, eg. when the distribution of the box plots
-                is clicked upon, the overall trend becomes more clear when only the mean (red line) is shown.""")
+        This is something to consider when using the predictive option on the model page.
+        We recommend you to click on the legend items to disable them, eg. when the distribution of the box plots
+        is clicked upon, the overall trend becomes more clear when only the mean (red line) is shown.""")
 
 # Define the order of weekdays
 weekday_order = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 # Calculate the mean of lcpeak_avg for each day of the week
 mean_lcpeak_avg = df.groupby('day_week')['lcpeak_avg'].mean().reindex(weekday_order).reset_index()
-
 # Create a box plot using Plotly
 fig = go.Figure()
 fig.add_trace(go.Box(y=df['lcpeak_avg'], x=df['day_week'], name='Distribution per Week Day'))
-
 # Add a red trend line for the mean values
 fig.add_trace(go.Scatter(x=mean_lcpeak_avg['day_week'], y=mean_lcpeak_avg['lcpeak_avg'],
                          mode='lines', name='Mean per Week Day', line_shape='spline',line=dict(color='red')))
-
+# Add a white line to indicate the threshold value for the model
+# fig.add_shape(type='line', x0='Monday', x1='Sunday', y0=75, y1=75, name="Threshold value", line=dict(color="white"))
 # Set labels and title
 fig.update_layout(xaxis_title='Weekday',
                   yaxis_title='Average Noise Level Peaks',
@@ -101,6 +100,9 @@ st.markdown("""The first thing that we will look into are the seperate noise eve
 
 # Convert 'result_timestamp' column to datetime
 events['result_timestamp'] = pd.to_datetime(events['result_timestamp'],format="%d/%m/%Y %H:%M:%S.%f")
+# Select one location with the highest amount of data
+location = "MP 01: Naamsestraat 35  Maxim"
+
 
 # PER MONTH
 # Create a dictionary to map month names to month numbers
@@ -109,8 +111,9 @@ month_names = list(calendar.month_name)[1:]
 selected_month_name = st.selectbox("Select Month", month_names, index=0, key="month_selectbox")
 # Get the corresponding month number
 selected_month_number = month_names.index(selected_month_name) + 1
-# Filter the data based on the selected month
+# Filter the data based on the selected month + the correct location
 filtered_events = events[events['result_timestamp'].dt.month == selected_month_number]
+filtered_events = filtered_events[filtered_events['description'] == location]
 # Calculate the distribution of detected noise events classes
 class_counts = filtered_events['noise_event_laeq_primary_detected_class'].value_counts()
 # Calculate the weighted class counts by multiplying with certainty
@@ -119,7 +122,7 @@ weighted_class_counts = class_counts * filtered_events.groupby('noise_event_laeq
 # Create a pie chart using Plotly
 fig_month = px.pie(weighted_class_counts, values=weighted_class_counts.values, names=weighted_class_counts.index)
 # Set the chart title
-fig_month.update_layout(title=f"Detected Noise Events Classes Distribution - Month {selected_month_name}")
+fig_month.update_layout(title=f"Detected Noise Events Classes Distribution - {selected_month_name}")
 # Resize the figure
 fig_month.update_layout(width=520, height=400)
 
@@ -129,11 +132,12 @@ fig_month.update_layout(width=520, height=400)
 weekday_names = list(calendar.day_name)
 # Create a selectbox to select the weekday
 selected_weekday_name = st.selectbox("Select Weekday", weekday_names)
-# Filter the data based on the selected weekday
-filtered_events = events[events['result_timestamp'].dt.strftime("%A") == selected_weekday_name]
+# Filter the data based on the selected month + weekday + correct location
+filtered_events2 = filtered_events[filtered_events['result_timestamp'].dt.strftime("%A") == selected_weekday_name]
 # Calculate the distribution of detected noise events classes
-class_counts = filtered_events['noise_event_laeq_primary_detected_class'].value_counts()
-weighted_class_counts = class_counts * filtered_events.groupby('noise_event_laeq_primary_detected_class')[
+class_counts = filtered_events2['noise_event_laeq_primary_detected_class'].value_counts()
+# Calculate the weighted class counts by multiplying with certainty
+weighted_class_counts = class_counts * filtered_events2.groupby('noise_event_laeq_primary_detected_class')[
     'noise_event_laeq_primary_detected_certainty'].mean()
 # Create a pie chart using Plotly
 fig_weekday = px.pie(weighted_class_counts, values=weighted_class_counts.values, names=weighted_class_counts.index)

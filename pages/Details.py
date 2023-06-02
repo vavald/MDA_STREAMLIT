@@ -36,8 +36,8 @@ st.markdown("""The first dataset to discuss is the data used for the implemented
         This is a combination of multiple parameters from other datasets, discussed below.
         The used :blue[**model input**] data is preprocessed to get a CSV file with the following parameters:
         location of the sensor, the date (consisting of month and day of the month), the day of the week,
-        the time (consisting of the hour and minute), the humidity, the dewpoint temperature, n, the radiation,
-        the rain intensity and the daily rain, the wind direction and speed, the rad60, 
+        the time (consisting of the hour and minute), the humidity, the dewpoint temperature, the amount of measures n, 
+        the radiation, the rain intensity and the daily rain, the wind direction and speed, the rad60, 
         the average amount of trucs, cars and pedestrians, v85, lceq_avg and lcpeak_avg.
         There are also two columns added to indicate weather and telraam data. 
         """)
