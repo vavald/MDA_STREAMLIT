@@ -8,7 +8,7 @@ import plotly.express as px
 from sklearn.model_selection import train_test_split
 from xgboost import XGBRegressor
 import pickle
-st.set_page_config(page_title="Air Quality", page_icon="༄", layout='wide', initial_sidebar_state='auto')
+st.set_page_config(page_title="Air Quality", page_icon="💨", layout='wide', initial_sidebar_state='auto')
 
 @st.cache_data
 def load_data():
@@ -32,7 +32,7 @@ merged_df = pd.merge(df, airquality, how='left', on=['month', 'day_month', 'day_
 
 new_df = merged_df.drop(['lcpeak_avg', 'lceq_avg', 'v85', 'Telraam data', 'avg_pedestrians', 'avg_bikes', 'avg_cars', 'avg_trucks' ], axis=1)
 
-st.title("Air Quality analysis ༄")
+st.title("Air Quality analysis 💨")
 st.markdown("In this section, we will analyse the air quality data found in the PurpleAir API. We will start by looking at the data and then we will try to find some correlations between the different variables.")
 
 
