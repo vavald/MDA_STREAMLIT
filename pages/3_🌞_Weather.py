@@ -34,14 +34,11 @@ expander = st.expander('SUN RADIATION AND NOISE LEVEL PER DAY IN ONE YEAR', expa
 expander.markdown(
     """
    Below you can see a plot with the sun radiation and noise level per day in one year. 
-   The colours represent the noise levels with its corresponding value. 
+   The colours represent the noise levels with its corresponding values. 
    The solar radiation increases and the noise levels increase too, especially in May and June.
    Despite the sun radiation in July being higher, the noise levels appear to be lower 
    (eg. people on vacation/no students in Leuven).
-   
-   In the second semester, although the sun radiation decreases, the noise levels do not follow the same pattern.   
-   December has a lower sun radiation than January, 
-   however the noise levels are higher (eg. because of Christmas Eve and other holidays).  """
+     """
 )
 
 if False: """"
@@ -161,15 +158,14 @@ fig.update_traces(marker=dict(opacity=0.5))
 expander2.markdown(
     """
    The scatter plot shows us the relationship between Temperature and Noise level per day in one year,
-   where the colours respresent the noise levels with their corresponding value. 
+   where the colours respresent the noise levels with their corresponding values. 
    In January and February, both the temperature and the noise levels are high. 
    In March there is a difference in comparison to the first two months of the year:
    the temperature increases as well as the noise levels. 
-   This tendecy prevails until June. 
-   Despite July having higher temperatures, the noise levels decrease (eg. people are on vacations)/
-   Although the temperature decreases after July, we cannot assume that the noise level decreases directly.
+   This tendency prevails until June. 
+   Despite July having higher temperatures, the noise levels decrease (eg. people are on vacations)./
+   Although the temperature decreases after July, we do not assume that the noise level decreases directly.
    We can distinguish the tendency that the noise level does not change significantly. 
-   Noise levels do not excede 80dB (only in a counted number of days). 
 """
 )
 expander2.plotly_chart(fig)
@@ -185,10 +181,9 @@ expander3 = st.expander('SUN RADIATION VS NOISE LEVEL PER DAY EVERY 10 MINUTES',
 expander3.markdown(
     """
     Beneath you can see a plot describing the sun radiation versus the noise level per day, every 10 minutes. 
-    This shows us the behaviour of the noise level every day of the week at the same time in intervals of 10 minutes.
-    The colours represent the noise levels with their corresponding value. 
-    Unquestionably, from Monday to Friday when the sun radiation increases with time, the noise levels do too.
-    However, in the weekend (Friday, Saturday and Sunday) we can find higher levels of sun radiation, but the noise levels are
+    This shows us the behaviour of the noise level every day of the week at the same time in intervals of 10 minutes. 
+    From Monday to Friday, when the sun radiation increases over time, the noise levels do too.
+    However, in the weekend (Friday, Saturday and Sunday) we can find higher levels of sun radiation, but the noise levels do
     remain lower than the rest of the weekdays.
     
     From midnight to 6:10 AM, sun radiation is logically low and the noise most of the time as well.
