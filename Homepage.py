@@ -121,6 +121,10 @@ if st.button('Show Bar Chart'):
         fig.update_yaxes(title_text="Sound Level (dB)", automargin=True)
 
         st.plotly_chart(fig, use_container_width=True)
+        st.markdown("""As you can see, a lot of data is missing for some of the Noise sensors. 
+        The noise sensor at the Calvariekapel has no missing data and sits pretty close to a Telraam Sensor that has data for the year of 2022. 
+        This makes the Calvariekapel sensor very interesting for us and thus a good reason to use it as the main sound sensor in our analysis""")
+
 
 # create button to show both bar charts
 if st.button('Show Both Bar Charts'):
@@ -200,8 +204,5 @@ if st.button('Show Both Bar Charts'):
 
         st.plotly_chart(fig, use_container_width=True)
         
-st.markdown("""As you can see, a lot of data is missing for some of the Noise sensors. 
-The noise sensor at the Calvariekapel has no missing data and sits pretty close to a Telraam Sensor that has data for the year of 2022. 
-This makes the Calvariekapel sensor very interesting for us and thus a good reason to use it as the main sound sensor in our analysis""")
 
 
