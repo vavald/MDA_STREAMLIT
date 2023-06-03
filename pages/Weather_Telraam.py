@@ -29,7 +29,9 @@ import plotly.express as px
 
 st.header('Model - Weather dataset 🌞')
 
-st.markdown(
+st.expander('Sun radiation and noise level per day in one year', expanded=False)
+
+expander.markdown(
     """
    Below you can see a plot with the sun radiation and noise level per day in one year. 
    The colours represent the noise levels with its corresponding value. 
@@ -136,12 +138,12 @@ fig.update_yaxes(title_text='Weighted Solar Radiation (W/m2)')
 fig.update_coloraxes(colorbar_title='Sound Level')
 fig.update_traces(marker=dict(opacity=0.5))
 
-st.plotly_chart(fig)
+expander.plotly_chart(fig)
 #####################
 
 # In[ ]:
 
-st.markdown(
+expander.markdown(
     """
    The scatter plot shows us the relationship between Temperature and Noise level per day in one year,
    where the colours respresent the noise levels with their corresponding value. 
