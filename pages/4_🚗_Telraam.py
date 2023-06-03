@@ -36,13 +36,11 @@ expander4 = st.expander('NOISE LEVEL VS AVERAGE CAR PER DAY PER MONTH', expanded
 expander4.markdown(
     """
     The scatter plot 'Noise level of average cars per day in one month' shows us the noise level produced by
-    the average cars per day. 
-    The colors represent the noise levels with its correspondent value. 
-    
+    the average cars per day.
     We obtained that higher average of cars does not imply higher noise level. One example of this situation occurs 
-    on the 14th day, we can see a noise level of 73.56 dB with an average of 80 cars 
-    and a noise level of 80,20 dB is obtained when the average cars are 42.
-    Besides, we got that different average car can cause identical noise levels (in different periods).
+    on the 14th day, where we can see a noise level of 73.56 dB with an average of 80 cars 
+    and where a noise level of 80,20 dB is obtained when the average cars are 42.
+    Besides, we got that different average cars can cause identical noise levels (in different periods).
     On the 27th day of the month, a noise level of 81 dB is found when the average cars have the value of 30 and 54,47.
     
 """
@@ -68,16 +66,15 @@ expander5.markdown(
     Next up is the scatter plot with the noise level of average cars per day every 10 minutes.
     This plot shows us a comparison between the behaviour of the noise level and the behaviour of the average cars,
     every day of the week at the same time in intervals of 10 minutes.
-    The colours represent the noise levels with its corresponding values. 
     Again, we get that a higher average of cars does not directly imply higher levels of noise. 
     However, time does influence the noise level.
     
     At 3:00 AM the average amount of cars increases,
     however the noise levels start to change. 
-    At this time window, we see on Saturday that the average amount of cars is 0, but the noise level is 67.5. 
+    At this time window, we see on Saturday that the average amount of cars is 0 but the noise level is 67.5. 
     Wednesday, Thursday and Friday have a similar trend and their
     noise levels stay between 64 and 66 dB when the average of cars is 0. 
-    Saturday at 4:00 AM, we get a high noise level of 70.1 dB when the average autos is 0.
+    Saturday at 4:00 AM, we get a high noise level of 70.1 dB when the average cars is 0.
     Wednesday and Thursday have the same situation with 68 dB and 70 dB respectively, when the average of cars is 0.
              
     Monday to Friday:
