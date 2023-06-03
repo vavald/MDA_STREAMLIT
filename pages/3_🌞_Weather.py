@@ -38,6 +38,8 @@ expander.markdown(
    The solar radiation increases and the noise levels increase too, especially in May and June.
    Despite the sun radiation in July being higher, the noise levels appear to be lower 
    (eg. people on vacation/no students in Leuven).
+  In the second semester, although the sun radiation decreases, the noise levels do not follow the same pattern.
+     December has a lower sun radiation than January but the noise levels are higher (eg. because of Christmas Eve and other holidays)
      """
 )
 
