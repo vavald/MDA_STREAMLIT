@@ -141,9 +141,24 @@ fig.update_traces(marker=dict(opacity=0.5))
 expander.plotly_chart(fig)
 #####################
 
-# In[ ]:
 
-expander.markdown(
+
+
+# In[ ]:
+# create model1 = model where lcpeak_avg !=0
+expander2 = st.expander('Temperature vs Noise level per day in one year', expanded=False)
+model1 = model[model['LC_TEMP'] != 0]
+
+fig = px.scatter(model1, x="day_month", y="LC_TEMP", animation_frame="month", animation_group="lcpeak_avg",
+         color="lcpeak_avg", hover_name="lcpeak_avg",range_y=[-15,45],
+         color_continuous_scale="RdYlGn_r",
+         range_x=[-1,31.5],title=" Temperature vs Noise level per day in one year" )
+fig.update_xaxes(title_text='Day of the Month')
+fig.update_yaxes(title_text='Temperature (°C)')
+fig.update_coloraxes(colorbar_title='Sound Level')
+fig.update_traces(marker=dict(opacity=0.5))
+
+expander2.markdown(
     """
    The scatter plot shows us the relationship between Temperature and Noise level per day in one year,
    where the colours respresent the noise levels with their corresponding value. 
@@ -157,26 +172,17 @@ expander.markdown(
    Noise levels do not excede 80dB (only in a counted number of days). 
 """
 )
-
-
-# In[ ]:
-# create model1 = model where lcpeak_avg !=0
-model1 = model[model['LC_TEMP'] != 0]
-
-fig = px.scatter(model1, x="day_month", y="LC_TEMP", animation_frame="month", animation_group="lcpeak_avg",
-         color="lcpeak_avg", hover_name="lcpeak_avg",range_y=[-15,45],
-         color_continuous_scale="RdYlGn_r",
-         range_x=[-1,31.5],title=" Temperature vs Noise level per day in one year" )
-fig.update_xaxes(title_text='Day of the Month')
-fig.update_yaxes(title_text='Temperature (°C)')
-fig.update_coloraxes(colorbar_title='Sound Level')
-fig.update_traces(marker=dict(opacity=0.5))
-st.plotly_chart(fig)
+expander2.plotly_chart(fig)
 
 
 # In[ ]:
 
-st.markdown(
+
+# add column hour:minute to noise data
+model['10_min_interval_start_time'] = model['hour'].astype(str) + ':' + model['minute'].astype(str)
+expander3 = st.expander('Sun radiation vs Noise level per day every 10 minutes', expanded=False)
+
+expander3.markdown(
     """
     Beneath you can see a plot describing the sun radiation versus the noise level per day, every 10 minutes. 
     This shows us the behaviour of the noise level every day of the week at the same time in intervals of 10 minutes.
@@ -190,12 +196,6 @@ st.markdown(
 """
 )
 
-
-# In[ ]:
-
-# add column hour:minute to noise data
-model['10_min_interval_start_time'] = model['hour'].astype(str) + ':' + model['minute'].astype(str)
-
 fig = px.scatter(model.sort_values(["hour","minute",'day_week']), x="day_week", y="LC_RAD60", animation_frame="10_min_interval_start_time", animation_group="lcpeak_avg",
            color="lcpeak_avg", hover_name="lcpeak_avg",
            size_max=55,  range_y=[0,871],
@@ -205,11 +205,13 @@ fig.update_xaxes(title_text='Day of the Week')
 fig.update_yaxes(title_text='Weighted Solar Radiation (W/m2)')
 fig.update_coloraxes(colorbar_title='Sound Level')
 fig.update_traces(marker=dict(opacity=0.5))
-st.plotly_chart(fig)
+expander3.plotly_chart(fig)
 
-# In[ ]:
 
-st.markdown(
+
+
+expander4 = st.expander('Sun radiation vs Noise level per day every 10 minutes', expanded=False)
+expander4.markdown(
     """
     The scatter plot of temperature vs sun radiation every 10 minutes is given below.
     The colours represent the noise levels with its correspondent value. 
@@ -219,10 +221,6 @@ st.markdown(
     the noise levels increase regardless of temperature and sun radiation.
     After 16:40, the sun radiation and the noise level decreases (regardless of temperature).
     """)
-
-
-# In[ ]:
-
 fig = px.scatter(model, x="LC_TEMP", y="LC_RAD60", animation_frame="10_min_interval_start_time", animation_group="lcpeak_avg",
            color="lcpeak_avg", hover_name="lcpeak_avg",
            size_max=55, range_x=[-1.5,42], range_y=[-45,871],
@@ -239,7 +237,11 @@ st.plotly_chart(fig)
 
 st.header('Model - Telraam dataset 🚗')
 
-st.markdown(
+
+
+# In[ ]:
+expander4 = st.expander('Noise level of average cars per day in one month', expanded=False)
+expander4.markdown(
     """
     The scatter plot 'Noise level of average cars per day in one month' shows us the noise level produced by
     the average cars per day. 
@@ -253,9 +255,6 @@ st.markdown(
     
 """
 )
-
-# In[ ]:
-
 fig = px.scatter(model, x="day_month", y="avg_cars", animation_frame="day_month", animation_group="lcpeak_avg",
            color="lcpeak_avg", hover_name="lcpeak_avg",
            size_max=55, range_x=[-2,33], range_y=[-2,100],
@@ -267,9 +266,12 @@ fig.update_coloraxes(colorbar_title='Sound Level')
 
 fig.update_traces(marker=dict(opacity=0.7))
 
-st.plotly_chart(fig)
+expander4.plotly_chart(fig)
 
-st.markdown(
+
+expander5 = st.expander('Noise level of average cars per day every 10 minutes', expanded=False)
+
+expander5.markdown(
     """
     Next up is the scatter plot with the noise level of average cars per day every 10 minutes.
     This plot shows us a comparison between the behaviour of the noise level and the behaviour of the average cars,
@@ -299,7 +301,6 @@ st.markdown(
 """
 )
 
-
 fig = px.scatter(model.sort_values(["hour","minute",'day_week']), x="day_week", y="avg_cars", animation_frame="hour", animation_group="lcpeak_avg",
            color="lcpeak_avg", hover_name="lcpeak_avg",
            size_max=55,  range_y=[-2,90],
@@ -311,4 +312,4 @@ fig.update_coloraxes(colorbar_title='Sound Level')
 
 fig.update_traces(marker=dict(opacity=0.7))
 
-st.plotly_chart(fig)
+expander5.plotly_chart(fig)
