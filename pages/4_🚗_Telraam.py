@@ -6,7 +6,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import time
-st.set_page_config(page_title="Weather - Telraam", page_icon="🌞", layout='wide', initial_sidebar_state='auto')
+st.set_page_config(page_title="Telraam", page_icon="🚗", layout='wide', initial_sidebar_state='auto')
 
 @st.cache_data
 def load_data():
