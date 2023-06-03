@@ -244,3 +244,6 @@ fig.update_layout(xaxis_title='Time period', yaxis_title='Average Noise Level',
 fig.update_layout(width=1300, height=600)
 # Show the plot using Streamlit
 st.plotly_chart(fig)
+
+# Example to discuss: 13 August - Saturday - Naamsestraat 35
+# -> Big Fat Bass festival at the Kiekenstraat started at 8 PM = very much an outlier
