@@ -106,7 +106,7 @@ def user_input(data):
 input_df = user_input(data)
 
 # Display the app title and user input
-st.title('Gradient Boosting Model Explanation App 🤖')
+st.title('Gradient Boosting Model 🤖')
 st.write('\n')
 #st.subheader('User Input Parameters:')
 #st.write(input_df)
