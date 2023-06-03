@@ -184,7 +184,7 @@ month_name = [calendar.month_name[month_number] for month_number in available_mo
 col1, col2 = st.columns(2)
 with col1:
     selected_month_name = st.selectbox("Select Month", month_name, index=month_name.index("April"), key="month_selectbox2")
-    selected_month_numb = available_months[month_names.index(selected_month_name)+1]
+    selected_month_numb = available_months[month_name.index(selected_month_name)]
 
 with col2:
     # Filter the data to get days of the week available for the selected location and month
