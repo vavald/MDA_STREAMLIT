@@ -29,7 +29,7 @@ import plotly.express as px
 
 st.header('Model - Weather dataset 🌞')
 
-st.expander('Sun radiation and noise level per day in one year', expanded=False)
+expander = st.expander('Sun radiation and noise level per day in one year', expanded=False)
 
 expander.markdown(
     """

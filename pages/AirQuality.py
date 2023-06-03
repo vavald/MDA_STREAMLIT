@@ -10,7 +10,6 @@ from xgboost import XGBRegressor
 import pickle
 st.set_page_config(page_title="Air Quality", page_icon="༄", layout='wide', initial_sidebar_state='auto')
 
-
 @st.cache_data
 def load_data():
     df = pd.read_csv("data/model_input.csv", delimiter=";")
