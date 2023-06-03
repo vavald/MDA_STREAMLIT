@@ -55,10 +55,13 @@ st.plotly_chart(fig)
 
 
 # Add explanation
-st.markdown("""An obvious remark here is that Sunday has the lowest median and quartiles, but the highest outliers. 
+st.markdown("""An obvious remark when looking at the distribution per day,
+        is that Sunday has the lowest median and quartiles, but the highest outliers. 
         This is something to consider when using the predictive option on the model page.
         We recommend you to click on the legend items to disable them, eg. when the distribution of the box plots
-        is clicked upon, the overall trend becomes more clear when only the mean (red line) is shown.""")
+        is clicked upon, the overall trend becomes more clear when only the mean (red line) is shown.
+        To link this plot to the model, the green line is indicating the threshold value of 75 dB used
+        to predict possible noise nuisance.""")
 
 # Define the order of weekdays
 weekday_order = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
@@ -70,8 +73,10 @@ fig.add_trace(go.Box(y=df['lcpeak_avg'], x=df['day_week'], name='Distribution pe
 # Add a red trend line for the mean values
 fig.add_trace(go.Scatter(x=mean_lcpeak_avg['day_week'], y=mean_lcpeak_avg['lcpeak_avg'],
                          mode='lines', name='Mean per Week Day', line_shape='spline',line=dict(color='red')))
-# Add a white line to indicate the threshold value for the model
-# fig.add_shape(type='line', x0='Monday', x1='Sunday', y0=75, y1=75, name="Threshold value", line=dict(color="white"))
+# Add a shape representing the threshold value line
+fig.add_shape(type='line', x0=-1, x1=7, y0=75, y1=75,
+              line=dict(color='rgba(248, 255, 0, 0.5)', width=3, dash='solid'),
+              layer='below', name='Threshold value')
 # Set labels and title
 fig.update_layout(xaxis_title='Weekday',
                   yaxis_title='Average Noise Level Peaks',
@@ -94,7 +99,11 @@ st.markdown("""The first thing that we will look into are the seperate noise eve
         while taking into account the uncertainties during the registration.
         What we recommend is clicking on all the transport types in the legend to get them off the graph,
         as these are things that will be difficult to mitigate (sirens) 
-        and often happen during the day (passenger car).""")
+        and often happen during the day (passenger car) and do not bother people too much.
+        The location used here is at Naamsestraat 35, 
+        because this sensor collected the highest amount of noise events.
+        However, this specific data gathering started only on the 7th of March, 
+        so you will see that January and February are missing from the select box.""")
 
 # NOISE EVENTS
 
@@ -106,11 +115,11 @@ location = "MP 01: Naamsestraat 35  Maxim"
 
 # PER MONTH
 # Create a dictionary to map month names to month numbers
-month_names = list(calendar.month_name)[1:]
+month_names = list(calendar.month_name)[3:]
 # Create a selectbox to select the month
 selected_month_name = st.selectbox("Select Month", month_names, index=0, key="month_selectbox")
 # Get the corresponding month number
-selected_month_number = month_names.index(selected_month_name) + 1
+selected_month_number = month_names.index(selected_month_name) + 3
 # Filter the data based on the selected month + the correct location
 filtered_events = events[events['result_timestamp'].dt.month == selected_month_number]
 filtered_events = filtered_events[filtered_events['description'] == location]
@@ -166,14 +175,39 @@ st.markdown("""To get some more insight in how the data evolves at the exact sam
 
 # Filter the data based on selected location, day of the week, and time range
 selected_location = st.selectbox("Select Location", df['location'].unique())
-selected_month_names = st.selectbox("Select Month", month_names, index=0, key="month_selectbox2")
-selected_month_numb = month_names.index(selected_month_names) + 1
-selected_day = st.selectbox("Select Day of the Week", df['day_week'].unique())
-start_time = st.selectbox("Select Start Time",
-                          options=df[df['day_week'] == selected_day]['10_min_interval_start_time'].unique())
-end_time = st.selectbox("Select End Time",
-                        options=df[df['day_week'] == selected_day]['10_min_interval_start_time'].unique())
 
+# Filter the data to get months available for the selected location
+available_months = df[df['location'] == selected_location]['month'].unique()
+# Map month numbers to month names
+month_name = [calendar.month_name[month_number] for month_number in available_months]
+# Split the layout into two columns for month and day select boxes
+col1, col2 = st.columns(2)
+with col1:
+    selected_month_name = st.selectbox("Select Month", month_name, index=month_name.index("April"), key="month_selectbox2")
+    selected_month_numb = available_months[month_names.index(selected_month_name)]
+
+with col2:
+    # Filter the data to get days of the week available for the selected location and month
+    available_days = df[(df['location'] == selected_location) & (df['month'] == selected_month_numb)]['day_week'].unique()
+    # Sort the available days based on the defined order
+    sorted_available_days = sorted(available_days, key=lambda day: weekday_order.index(day))
+    selected_day = st.selectbox("Select Day of the Week", sorted_available_days)
+
+# Filter the data to get times available for the selected location, month, and day of the week
+available_times = df[(df['location'] == selected_location) & (df['month'] == selected_month_numb) 
+                     & (df['day_week'] == selected_day)]['10_min_interval_start_time'].unique()
+# Set default values for start time and end time
+default_start_time = available_times[0]
+default_end_time = available_times[-1]
+# Split the layout into two columns for start time and end time select boxes
+col1, col2 = st.columns(2)
+with col1:
+    start_time = st.selectbox("Select Start Time", options=available_times, index=0, 
+                          format_func=lambda x: x if x != default_start_time else f"{x} (default)")
+with col2:
+    end_time = st.selectbox("Select End Time", options=available_times, index=len(available_times)-1, 
+                        format_func=lambda x: x if x != default_end_time else f"{x} (default)")       
+    
 # Combine relevant columns to create a datetime column
 df['datetime'] = pd.to_datetime(df['year'].astype(str) + '-' +
                                df['month'].astype(str) + '-' +
@@ -199,9 +233,14 @@ for week_number, week_data in grouped_df.groupby('week_number'):
     fig.add_trace(go.Scatter(x=week_data['10_min_interval_start_time'], y=week_data['lcpeak_avg'],
                              name=f"Week {week_number}", mode='lines'))
 
+# Add a shape representing the threshold value line
+fig.add_shape(type='line', x0=start_time, x1=end_time, y0=75, y1=75,
+              line=dict(color='rgba(248, 255, 0, 0.5)', width=3, dash='solid'),
+              layer='below', name='Threshold value')
+
 # Set labels and title
 fig.update_layout(xaxis_title='Time period', yaxis_title='Average Noise Level',
-                  title=f'Noise Levels on {selected_day} at Location: {selected_location} ({start_time} - {end_time})')
-
+                  title=f'Noise Levels on {selected_day} in {selected_month_name} at {selected_location} ({start_time} - {end_time})')
+fig.update_layout(width=1300, height=600)
 # Show the plot using Streamlit
 st.plotly_chart(fig)
