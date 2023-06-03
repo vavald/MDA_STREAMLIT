@@ -231,7 +231,7 @@ fig.update_yaxes(title_text='Weighted Solar Radiation (W/m2)')
 fig.update_coloraxes(colorbar_title='Sound Level')
 
 fig.update_traces(marker=dict(opacity=0.7))
-st.plotly_chart(fig)
+expander4.plotly_chart(fig)
 
 # In[ ]:
 
