@@ -163,7 +163,7 @@ expander2.markdown(
    In March there is a difference in comparison to the first two months of the year:
    the temperature increases as well as the noise levels. 
    This tendency prevails until June. 
-   Despite July having higher temperatures, the noise levels decrease (eg. people are on vacations)./
+   Despite July having higher temperatures, the noise levels decrease (eg. people are on vacations).
    Although the temperature decreases after July, we do not assume that the noise level decreases directly.
    We can distinguish the tendency that the noise level does not change significantly. 
 """
@@ -209,12 +209,9 @@ expander4 = st.expander('TEMPERATURE VS SUN RADIATION VS SOUND LEVEL OVER THE YE
 expander4.markdown(
     """
     The scatter plot of temperature vs sun radiation every 10 minutes is given below.
-    The colours represent the noise levels with its correspondent value. 
-    
     Between midnight and 12:10 PM, we can see that these three variables increase.
-    However, this tendency changes between 12:10 and 12:40 PM, 
-    the noise levels increase regardless of temperature and sun radiation.
-    After 16:40, the sun radiation and the noise level decreases (regardless of temperature).
+    However, this tendency changes between 12:10 and 12:40 PM.
+    After 16:40, the sun radiation and the noise level decrease (regardless of temperature).
     """)
 fig = px.scatter(model, x="LC_TEMP", y="LC_RAD60", animation_frame="10_min_interval_start_time", animation_group="lcpeak_avg",
            color="lcpeak_avg", hover_name="lcpeak_avg",
