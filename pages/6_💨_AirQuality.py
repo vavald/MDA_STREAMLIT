@@ -92,17 +92,12 @@ st.plotly_chart(fig)
 # fig.update_layout(title='2.5_um_count by day', xaxis_title='Day', yaxis_title='2.5_um_count')
 # st.plotly_chart(fig)
 
-# Group the data by month and calculate the average 2.5_um_count per month
 monthly_avg = new_df.groupby('month')['2.5_um_count'].mean().reset_index()
-
-# Create the line plot
+st.header("Average PM2.5 particles count per Month")
+st.markdown("We will now look at the average PM2.5 particles count per Month. We can see that there is a negative correlation between the 2.5_um_count and the month. This shows that the air quality is better during the summer months.")
 fig = px.line(monthly_avg, x='month', y='2.5_um_count', color_discrete_sequence=['#3366cc'])
-
-# Update the plot layout and axis labels
 fig.update_layout(title='Average 2.5_um_count per Month',
                   xaxis_title='Month', yaxis_title='Average 2.5_um_count')
-
-# Display the plot
 st.plotly_chart(fig)
 
 # Scatter plot of 2.5_um_count by LC_TEMP
