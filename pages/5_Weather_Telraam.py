@@ -29,7 +29,7 @@ import plotly.express as px
 
 st.header('Model - Weather dataset 🌞')
 
-expander = st.expander('Sun radiation and noise level per day in one year', expanded=False)
+expander = st.expander('SUN RADIATION AND NOISE LEVEL PER DAY IN ONE YEAR', expanded=False)
 
 expander.markdown(
     """
@@ -146,7 +146,7 @@ expander.plotly_chart(fig)
 
 # In[ ]:
 # create model1 = model where lcpeak_avg !=0
-expander2 = st.expander('Temperature vs Noise level per day in one year', expanded=False)
+expander2 = st.expander('TEMPERATURE VS NOISE LEVEL PER DAY IN ONE YEAR', expanded=False)
 model1 = model[model['LC_TEMP'] != 0]
 
 fig = px.scatter(model1, x="day_month", y="LC_TEMP", animation_frame="month", animation_group="lcpeak_avg",
@@ -180,7 +180,7 @@ expander2.plotly_chart(fig)
 
 # add column hour:minute to noise data
 model['10_min_interval_start_time'] = model['hour'].astype(str) + ':' + model['minute'].astype(str)
-expander3 = st.expander('Sun radiation vs Noise level per day every 10 minutes', expanded=False)
+expander3 = st.expander('SUN RADIATION VS NOISE LEVEL PER DAY EVERY 10 MINUTES', expanded=False)
 
 expander3.markdown(
     """
@@ -210,7 +210,7 @@ expander3.plotly_chart(fig)
 
 
 
-expander4 = st.expander('Sun radiation vs Noise level per day every 10 minutes', expanded=False)
+expander4 = st.expander('TEMPERATURE VS SUN RADIATION VS SOUND LEVEL OVER THE YEAR', expanded=False)
 expander4.markdown(
     """
     The scatter plot of temperature vs sun radiation every 10 minutes is given below.
@@ -240,7 +240,7 @@ st.header('Model - Telraam dataset 🚗')
 
 
 # In[ ]:
-expander4 = st.expander('Noise level of average cars per day in one month', expanded=False)
+expander4 = st.expander('NOISE LEVEL VS AVERAGE CAR PER DAY PER MONTH', expanded=False)
 expander4.markdown(
     """
     The scatter plot 'Noise level of average cars per day in one month' shows us the noise level produced by
@@ -269,7 +269,7 @@ fig.update_traces(marker=dict(opacity=0.7))
 expander4.plotly_chart(fig)
 
 
-expander5 = st.expander('Noise level of average cars per day every 10 minutes', expanded=False)
+expander5 = st.expander('NOISE LEVEL VS AVERAGE CARS PER DAY', expanded=False)
 
 expander5.markdown(
     """
