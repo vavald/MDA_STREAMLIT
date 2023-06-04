@@ -12,7 +12,7 @@ st.set_page_config(page_title="Noise", page_icon="🔊", layout='wide', initial_
 @st.cache_data
 def load_data():
     df = pd.read_csv('data/final_noise_data.csv')
-    events = pd.read_csv('data/export41.csv')
+    events = pd.read_csv('data/noise_events.csv')
     return df, events
 
 df, events = load_data()
