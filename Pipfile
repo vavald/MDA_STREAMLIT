@@ -15,6 +15,7 @@ xgboost = "*"
 plotly = "*"
 statsmodels = "*"
 streamlit-extras = "*"
+watchdog = "*"
 
 [dev-packages]
 
