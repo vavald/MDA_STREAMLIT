@@ -53,7 +53,7 @@ st.sidebar.markdown(f'<div class="blue-box">{css}<h1>About</h1><p>Web App Url: <
 ####################
 
 # Display the app title and user input
-st.title('MDA_Switzerland - Data Science Project 🇨🇭')
+st.title('MDA Switzerland - Data Science Project 🇨🇭')
 
 # Add explanation
 st.markdown("""In context of a group project related to the Modern Data Analytics course at KU Leuven, 
