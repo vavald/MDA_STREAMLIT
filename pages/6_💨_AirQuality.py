@@ -33,7 +33,8 @@ merged_df = pd.merge(df, airquality, how='left', on=['month', 'day_month', 'day_
 new_df = merged_df.drop(['lcpeak_avg', 'lceq_avg', 'v85', 'Telraam data', 'avg_pedestrians', 'avg_bikes', 'avg_cars', 'avg_trucks' ], axis=1)
 
 st.title("Air Quality analysis 💨")
-st.markdown("In this section, we will analyse the air quality data found in the PurpleAir API. We will start by looking at the data and then we will try to find some correlations between the different variables.")
+st.markdown("""In this section, we will analyse the air quality data found in the PurpleAir API. 
+We will start by looking at the data and then we will try to find some correlations between the different variables.""")
 
 
 # Group the data by month and calculate the mean of '2.5_um_count'
@@ -41,7 +42,8 @@ grouped_df = new_df.groupby('month')['2.5_um_count'].mean().reset_index()
 
 
 st.header("Correlation heatmap")
-st.markdown("We will start by looking at the correlation heatmap of the different variables. This will give us a first idea of the variables that are somewhat correlated with the count of 2.5um particles.")
+st.markdown("""We will start by looking at the correlation heatmap of the different variables. 
+            This will give us a first idea of the variables that are somewhat correlated with the count of 2.5um particles.""")
 columns_of_interest = ['LC_TEMP', 'LC_DAILYRAIN', 'LC_RAD', 'LC_WINDDIR', 'month', '2.5_um_count']
 corr_matrix = new_df[columns_of_interest].corr()
 
@@ -86,17 +88,17 @@ monthly_avg = new_df.groupby('month')['2.5_um_count'].mean().reset_index()
 st.header("Average PM2.5 particles count per Month")
 st.markdown("We will now look at the average PM2.5 particles count per Month. We can see that there is a negative correlation between the 2.5_um_count and the month. This shows that the air quality is better during the summer months.")
 fig = px.line(monthly_avg, x='month', y='2.5_um_count', color_discrete_sequence=['#3366cc'])
-fig.update_layout(title='Average 2.5_um_count per Month',
-                  xaxis_title='Month', yaxis_title='Average 2.5_um_count')
+fig.update_layout(title='Average 2.5um count per Month',
+                  xaxis_title='Month', yaxis_title='Average 2.5um count')
 st.plotly_chart(fig)
 
 # Scatter plot of 2.5_um_count by LC_TEMP
-st.header("2.5_um_count by LC_TEMP")
-st.markdown("We will now look at the 2.5_um_count by LC_TEMP. We can see that there is a negative correlation between the 2.5_um_count and the LC_TEMP. This means that when the temperature is higher, the air quality is better.")
+st.header("2.5um count and Temperature")
+st.markdown("We will now look at the 2.5um count by Temperature. We can see that there is a negative correlation between the 2.5_um_count and the LC_TEMP. This means that when the temperature is higher, the air quality is better.")
 fig = px.scatter(new_df, x="LC_TEMP", y="2.5_um_count", trendline="ols", 
                  animation_frame="month", animation_group="day_month", color="day_month",
                  hover_name="day_month", range_x=[-5, 25], range_y=[0, 40])
-fig.update_layout(title='2.5_um_count by LC_TEMP', xaxis_title='LC_TEMP', yaxis_title='2.5_um_count')
+fig.update_layout(title='2.5um count by Temperature', xaxis_title='Temperature', yaxis_title='2.5um count')
 st.plotly_chart(fig)
 
 
@@ -110,7 +112,7 @@ xgb = model
 
 st.header("Feature importance")
 st.markdown("""We will now look at the feature importance of the different variables. 
-The used model is a XGBoost model, with the target variable being the 2.5_um_count. By looking at the feature importance, we can see which variables are the most important in predicting the 2.5_um_count.
+The used model is a XGBoost model, with the target variable being the 2.5um count. By looking at the feature importance, we can see which variables are the most important in predicting the 2.5_um_count.
             We can see that the most important variables are the temporal data and weather conditions.""")
 importance_sorted = sorted(zip(xgb.feature_importances_, x.columns), reverse=True)
 importance_values_sorted = [imp for imp, _ in importance_sorted]
