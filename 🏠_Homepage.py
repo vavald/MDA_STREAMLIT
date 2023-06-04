@@ -29,6 +29,25 @@ def load_data():
 # Use the function to load data
 model_input, df_meta, df_noise = load_data()
 
+# Custom CSS styling for dark mode
+css = """
+<style>
+    .blue-box {
+        background-color: #002f5d;
+        padding: 20px;
+        border-radius: 10px;
+        color: #ffffff;
+    }
+
+    .blue-box a {
+        color: #ffffff;
+    }
+</style>
+"""
+
+# Display the blue box with the content
+st.sidebar.markdown(f'<div class="blue-box">{css}<h1>About</h1><p>Web App Url: <a href="https://vavald-mda-streamlit--homepage-7lms53.streamlit.app/">Streamlit</a></p><p>GitHub repository: <a href="https://github.com/vavald/MDA_streamlit">Github</a></p></div>', unsafe_allow_html=True)
+
 ####################
 # Homepage Map
 ####################
