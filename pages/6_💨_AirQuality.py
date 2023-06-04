@@ -39,9 +39,8 @@ st.markdown("In this section, we will analyse the air quality data found in the 
 # Group the data by month and calculate the mean of '2.5_um_count'
 grouped_df = new_df.groupby('month')['2.5_um_count'].mean().reset_index()
 
-
-st.header("Correlation heatmap")
-st.markdown("We will start by looking at the correlation heatmap of the different variables. This will give us a first idea of the variables that are somewhat correlated with the count of 2.5um particles.")
+expander_corr = st.expander("Correlation heatmap explanation")
+expander_corr.markdown("We will start by looking at the correlation heatmap of the different variables. This will give us a first idea of the variables that are somewhat correlated with the count of 2.5um particles.")
 columns_of_interest = ['LC_TEMP', 'LC_DAILYRAIN', 'LC_RAD', 'LC_WINDDIR', 'month', '2.5_um_count']
 corr_matrix = new_df[columns_of_interest].corr()
 
@@ -78,26 +77,24 @@ fig.update_layout(
     height=600,
     annotations=annotations
 )
+expander_corr.plotly_chart(fig)
 
-# Display the plot using Streamlit
-st.plotly_chart(fig)
 
 monthly_avg = new_df.groupby('month')['2.5_um_count'].mean().reset_index()
-st.header("Average PM2.5 particles count per Month")
-st.markdown("We will now look at the average PM2.5 particles count per Month. We can see that there is a negative correlation between the 2.5_um_count and the month. This shows that the air quality is better during the summer months.")
+expander_mon = st.expander("Average PM2.5 particles count per Month")
+expander_mon.markdown("We will now look at the average PM2.5 particles count per Month. We can see that there is a negative correlation between the 2.5_um_count and the month. This shows that the air quality is better during the summer months.")
 fig = px.line(monthly_avg, x='month', y='2.5_um_count', color_discrete_sequence=['#3366cc'])
 fig.update_layout(title='Average 2.5_um_count per Month',
                   xaxis_title='Month', yaxis_title='Average 2.5_um_count')
-st.plotly_chart(fig)
+expander_mon.plotly_chart(fig)
 
-# Scatter plot of 2.5_um_count by LC_TEMP
-st.header("2.5_um_count by LC_TEMP")
-st.markdown("We will now look at the 2.5_um_count by LC_TEMP. We can see that there is a negative correlation between the 2.5_um_count and the LC_TEMP. This means that when the temperature is higher, the air quality is better.")
+expander_temp = st.expander("Average PM2.5 particles count per Temperature")
+expander_temp.markdown("We will now look at the average PM2.5 particles count per Temperature. We can see that there is a negative correlation between the 2.5_um_count and the LC_TEMP. This means that when the temperature is higher, the air quality is better.")
 fig = px.scatter(new_df, x="LC_TEMP", y="2.5_um_count", trendline="ols", 
                  animation_frame="month", animation_group="day_month", color="day_month",
                  hover_name="day_month", range_x=[-5, 25], range_y=[0, 40])
 fig.update_layout(title='2.5_um_count by LC_TEMP', xaxis_title='LC_TEMP', yaxis_title='2.5_um_count')
-st.plotly_chart(fig)
+expander_temp.plotly_chart(fig)
 
 
 
@@ -107,11 +104,8 @@ x = merged_df.drop(['2.5_um_count'], axis=1)
 y = merged_df['2.5_um_count']  
 xgb = model
 
-
-st.header("Feature importance")
-st.markdown("""We will now look at the feature importance of the different variables. 
-The used model is a XGBoost model, with the target variable being the 2.5_um_count. By looking at the feature importance, we can see which variables are the most important in predicting the 2.5_um_count.
-            We can see that the most important variables are the temporal data and weather conditions.""")
+expander_imp = st.expander("Feature importance")
+expander_imp.markdown("We will now look at the feature importance of the different variables. The used model is a XGBoost model, with the target variable being the 2.5_um_count. By looking at the feature importance, we can see which variables are the most important in predicting the 2.5_um_count. We can see that the most important variables are the temporal data and weather conditions.")
 importance_sorted = sorted(zip(xgb.feature_importances_, x.columns), reverse=True)
 importance_values_sorted = [imp for imp, _ in importance_sorted]
 variable_names_sorted = [var for _, var in importance_sorted]
@@ -131,4 +125,4 @@ fig.update_layout(
     )
 )
 
-st.plotly_chart(fig)
+expander_imp.plotly_chart(fig)
