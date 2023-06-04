@@ -86,7 +86,7 @@ st.plotly_chart(fig)
 
 monthly_avg = new_df.groupby('month')['2.5_um_count'].mean().reset_index()
 st.header("Average PM2.5 particles count per Month")
-st.markdown("We will now look at the average PM2.5 particles count per Month. We can see that there is a negative correlation between the 2.5_um_count and the month. This shows that the air quality is better during the summer months.")
+st.markdown("We will now look at the average PM2.5 particles count per Month. We can see that there is a negative correlation between the 2.5um count and the month. This shows that the air quality is better during the summer months.")
 fig = px.line(monthly_avg, x='month', y='2.5_um_count', color_discrete_sequence=['#3366cc'])
 fig.update_layout(title='Average 2.5um count per Month',
                   xaxis_title='Month', yaxis_title='Average 2.5um count')
@@ -94,7 +94,7 @@ st.plotly_chart(fig)
 
 # Scatter plot of 2.5_um_count by LC_TEMP
 st.header("2.5um count and Temperature")
-st.markdown("We will now look at the 2.5um count by Temperature. We can see that there is a negative correlation between the 2.5_um_count and the LC_TEMP. This means that when the temperature is higher, the air quality is better.")
+st.markdown("We will now look at the 2.5um count by Temperature. We can see that there is a negative correlation between the 2.5um count and the LC_TEMP. This means that when the temperature is higher, the air quality is better.")
 fig = px.scatter(new_df, x="LC_TEMP", y="2.5_um_count", trendline="ols", 
                  animation_frame="month", animation_group="day_month", color="day_month",
                  hover_name="day_month", range_x=[-5, 25], range_y=[0, 40])
@@ -112,7 +112,7 @@ xgb = model
 
 st.header("Feature importance")
 st.markdown("""We will now look at the feature importance of the different variables. 
-The used model is a XGBoost model, with the target variable being the 2.5um count. By looking at the feature importance, we can see which variables are the most important in predicting the 2.5_um_count.
+The used model is a XGBoost model, with the target variable being the 2.5um count. By looking at the feature importance, we can see which variables are the most important in predicting the 2.5um count.
             We can see that the most important variables are the temporal data and weather conditions.""")
 importance_sorted = sorted(zip(xgb.feature_importances_, x.columns), reverse=True)
 importance_values_sorted = [imp for imp, _ in importance_sorted]
