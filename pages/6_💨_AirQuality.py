@@ -33,7 +33,8 @@ merged_df = pd.merge(df, airquality, how='left', on=['month', 'day_month', 'day_
 new_df = merged_df.drop(['lcpeak_avg', 'lceq_avg', 'v85', 'Telraam data', 'avg_pedestrians', 'avg_bikes', 'avg_cars', 'avg_trucks' ], axis=1)
 
 st.title("Air Quality analysis 💨")
-st.markdown("In this section, we will analyse the air quality data found in the PurpleAir API. We will start by looking at the data and then we will try to find some correlations between the different variables.")
+st.markdown("""In this section, we will analyse the air quality data found in the PurpleAir API. 
+We will start by looking at the data and then we will try to find some correlations between the different variables.""")
 
 
 # Group the data by month and calculate the mean of '2.5_um_count'
@@ -81,12 +82,12 @@ expander_corr.plotly_chart(fig)
 
 
 monthly_avg = new_df.groupby('month')['2.5_um_count'].mean().reset_index()
-expander_mon = st.expander("Average PM2.5 particles count per Month")
-expander_mon.markdown("We will now look at the average PM2.5 particles count per Month. We can see that there is a negative correlation between the 2.5_um_count and the month. This shows that the air quality is better during the summer months.")
+st.header("Average PM2.5 particles count per Month")
+st.markdown("We will now look at the average PM2.5 particles count per Month. We can see that there is a negative correlation between the 2.5_um_count and the month. This shows that the air quality is better during the summer months.")
 fig = px.line(monthly_avg, x='month', y='2.5_um_count', color_discrete_sequence=['#3366cc'])
 fig.update_layout(title='Average 2.5_um_count per Month',
                   xaxis_title='Month', yaxis_title='Average 2.5_um_count')
-expander_mon.plotly_chart(fig)
+st.plotly_chart(fig)
 
 expander_temp = st.expander("Average PM2.5 particles count per Temperature")
 expander_temp.markdown("We will now look at the average PM2.5 particles count per Temperature. We can see that there is a negative correlation between the 2.5_um_count and the LC_TEMP. This means that when the temperature is higher, the air quality is better.")
@@ -94,7 +95,7 @@ fig = px.scatter(new_df, x="LC_TEMP", y="2.5_um_count", trendline="ols",
                  animation_frame="month", animation_group="day_month", color="day_month",
                  hover_name="day_month", range_x=[-5, 25], range_y=[0, 40])
 fig.update_layout(title='2.5_um_count by LC_TEMP', xaxis_title='LC_TEMP', yaxis_title='2.5_um_count')
-expander_temp.plotly_chart(fig)
+st.plotly_chart(fig)
 
 
 
