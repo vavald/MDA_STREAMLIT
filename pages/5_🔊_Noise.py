@@ -241,7 +241,7 @@ fig.add_shape(type='line', x0=start_time, x1=end_time, y0=75, y1=75,
 # Set labels and title
 fig.update_layout(xaxis_title='Time period', yaxis_title='Average Noise Level',
                   title=f'Noise Levels on {selected_day} in {selected_month_name} at {selected_location} ({start_time} - {end_time})')
-fig.update_layout(width=1300, height=600)
+fig.update_layout(width=1000, height=600)
 # Show the plot using Streamlit
 st.plotly_chart(fig)
 
