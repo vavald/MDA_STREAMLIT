@@ -39,7 +39,7 @@ expander4.markdown(
     the average cars everyday in one year.
     We obtained that higher average of cars does not imply higher noise level. One example of this situation occurs 
     19th october, where we can see a noise level of 81 dB with an average of 10 cars 
-    and where a noise level of 80dB is obtained when the average cars are 14.
+    and where a noise level of 80dB is obtained when the average cars is 14.
 """
 )
 fig = px.scatter(model, x="day_month", y="avg_cars", animation_frame="month", animation_group="lcpeak_avg",
