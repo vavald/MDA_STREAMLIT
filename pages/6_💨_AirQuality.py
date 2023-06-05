@@ -12,7 +12,7 @@ st.set_page_config(page_title="Air Quality", page_icon="💨", layout='wide', in
 
 @st.cache_data
 def load_data():
-    df = pd.read_csv("data/model_input.csv", delimiter=";")
+    df = pd.read_csv("data/model_input.csv")
     df.drop(['location'],axis=1,inplace=True)
     df = df[df['lceq_avg'] != 0]
     airquality = pd.read_csv("data/Air_Quality.csv", delimiter=",")

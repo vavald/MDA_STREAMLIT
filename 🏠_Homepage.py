@@ -12,7 +12,7 @@ st.set_page_config(page_title="MDA Switzerland - Data Science Project", page_ico
 @st.cache_data
 def load_data():
     # Load Data
-    model_input = pd.read_csv("data/model_input.csv",delimiter=";")
+    model_input = pd.read_csv("data/model_input.csv")
     df_meta = pd.read_csv('data/01_Metadata_v2.csv')
     df_noise = pd.read_csv('data/final_noise_data.csv')
     df_noise['hour'] = df_noise['10_min_interval_start_time'].str[:2]

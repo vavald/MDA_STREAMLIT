@@ -11,7 +11,7 @@ st.set_page_config(page_title="Weather", page_icon="🌞", layout='wide', initia
 @st.cache_data
 def load_data():
     noise = pd.read_csv('data/final_noise_data.csv')
-    model =  pd.read_csv('data/model_input.csv', sep=';', index_col=0)
+    model =  pd.read_csv('data/model_input.csv', index_col=0)
     model = model[model['lcpeak_avg'] != 0]
     return noise, model
 noise, model = load_data()

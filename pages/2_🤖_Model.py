@@ -16,7 +16,7 @@ st.set_page_config(page_title="Gradient Boosting Model Explanation", page_icon="
 
 @st.cache_data
 def load_data():
-    data = pd.read_csv('data/model_input.csv',delimiter=';')
+    data = pd.read_csv('data/model_input.csv')
     # Load the mode
     with open('data/xgboost_model.pkl', 'rb') as f:
         model = pickle.load(f)
