@@ -32,7 +32,7 @@ st.header('Model - Telraam dataset 🚗')
 
 
 # In[ ]:
-expander4 = st.expander('NOISE LEVEL VS AVERAGE CAR PER DAY PER MONTH', expanded=False)
+expander4 = st.expander('NOISE LEVEL VS AVERAGE CAR PER DAY IN ONE YEAR', expanded=False)
 expander4.markdown(
     """
     The scatter plot 'Noise level of average cars per day in one year' shows us the noise level produced by
