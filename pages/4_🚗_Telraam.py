@@ -35,14 +35,11 @@ st.header('Model - Telraam dataset 🚗')
 expander4 = st.expander('NOISE LEVEL VS AVERAGE CAR PER DAY PER MONTH', expanded=False)
 expander4.markdown(
     """
-    The scatter plot 'Noise level of average cars per day in one month' shows us the noise level produced by
-    the average cars per day.
+    The scatter plot 'Noise level of average cars per day in one year' shows us the noise level produced by
+    the average cars everyday in one year.
     We obtained that higher average of cars does not imply higher noise level. One example of this situation occurs 
-    on the 14th day, where we can see a noise level of 73.56 dB with an average of 80 cars 
-    and where a noise level of 80,20 dB is obtained when the average cars are 42.
-    Besides, we got that different average cars can cause identical noise levels (in different periods).
-    On the 27th day of the month, a noise level of 81 dB is found when the average cars have the value of 30 and 54,47.
-    
+    19th october, where we can see a noise level of 81 dB with an average of 10 cars 
+    and where a noise level of 80dB is obtained when the average cars are 14.
 """
 )
 fig = px.scatter(model, x="day_month", y="avg_cars", animation_frame="month", animation_group="lcpeak_avg",
