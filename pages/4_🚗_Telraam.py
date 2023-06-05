@@ -45,7 +45,7 @@ expander4.markdown(
     
 """
 )
-fig = px.scatter(model, x="day_month", y="avg_cars", animation_frame="day_month", animation_group="lcpeak_avg",
+fig = px.scatter(model, x="day_month", y="avg_cars", animation_frame="month", animation_group="lcpeak_avg",
            color="lcpeak_avg", hover_name="lcpeak_avg",
            size_max=55, range_x=[-2,33], range_y=[-2,100],
            color_continuous_scale="RdYlGn_r",
