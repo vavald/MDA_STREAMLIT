@@ -60,10 +60,10 @@ def user_input(data):
     LC_WINDSPEED = st.sidebar.slider('Wind Speed (m/s)', min_value=0.0, max_value=6.31, value=0.5, step=0.1)
     # define the rain using a slider
     LC_RAININ = st.sidebar.slider('Rain Intensity (mm/h)', min_value=0.0, max_value=78.0, value=0.0, step=0.1)
-    avg_trucks = st.sidebar.slider('Average Trucks', min_value=data['avg_trucks'].min(), max_value=data['avg_trucks'].max(), value=0.0, step=0.5)
-    avg_cars = st.sidebar.slider('Average Cars', min_value=data['avg_cars'].min(), max_value=data['avg_cars'].max(), value=0.0, step=0.5)
-    avg_bikes = st.sidebar.slider('Average Bikes', min_value=data['avg_bikes'].min(), max_value=data['avg_bikes'].max(), value=0.0, step=0.5)
-    avg_pedestrians = st.sidebar.slider('Average Pedestrians', min_value=data['avg_pedestrians'].min(), max_value=data['avg_pedestrians'].max(), value=0.0, step=0.5)
+    avg_trucks = st.sidebar.slider('Average Trucks', min_value=data['avg_trucks'].min(), max_value=100, value=0.0, step=0.5)
+    avg_cars = st.sidebar.slider('Average Cars', min_value=data['avg_cars'].min(), max_value=100, value=0.0, step=0.5)
+    avg_bikes = st.sidebar.slider('Average Bikes', min_value=data['avg_bikes'].min(), max_value=150, value=0.0, step=0.5)
+    avg_pedestrians = st.sidebar.slider('Average Pedestrians', min_value=data['avg_pedestrians'].min(), max_value=200, value=0.0, step=0.5)
     v85 = data['v85'].mean()
     Telraam_data = 1
     Weather_data = 1
