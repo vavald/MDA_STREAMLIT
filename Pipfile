@@ -16,6 +16,7 @@ plotly = "*"
 statsmodels = "*"
 streamlit-extras = "*"
 watchdog = "*"
+pipfile = "*"
 
 [dev-packages]
 

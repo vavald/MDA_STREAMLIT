@@ -49,7 +49,7 @@ fig = px.scatter(model, x="day_month", y="avg_cars", animation_frame="month", an
            color="lcpeak_avg", hover_name="lcpeak_avg",
            size_max=55, range_x=[-2,33], range_y=[-2,100],
            color_continuous_scale="RdYlGn_r",
-          title=" Noise level of average cars per day in one month")
+          title=" Noise level of average cars per day per month")
 fig.update_xaxes(title_text='Day of the Month')
 fig.update_yaxes(title_text='Average Number of Cars')
 fig.update_coloraxes(colorbar_title='Sound Level')
